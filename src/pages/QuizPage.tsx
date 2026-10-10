@@ -15,6 +15,7 @@ export function QuizPage() {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
+  const [wrongAnswers, setWrongAnswers] = useState<{question: typeof qcmData[0], userAnswer: string}[]>([]);
 
   // Filter questions based on selection
   const activeQuestions = useMemo(() => {
@@ -30,6 +31,8 @@ export function QuizPage() {
     
     if (option === question.answer) {
       setScore(s => s + 1);
+    } else {
+      setWrongAnswers(prev => [...prev, { question, userAnswer: option }]);
     }
   };
 
@@ -49,6 +52,7 @@ export function QuizPage() {
     setShowResult(false);
     setScore(0);
     setQuizFinished(false);
+    setWrongAnswers([]);
   };
 
   const backToMenu = () => {
@@ -126,26 +130,82 @@ export function QuizPage() {
 
   // Quiz Finished View
   if (quizFinished) {
+    const percentage = Math.round((score / activeQuestions.length) * 100);
+    let feedback = "";
+    if (percentage === 100) feedback = "C'est un sans-faute, bravo !";
+    else if (percentage >= 75) feedback = "Très bon travail ! Encore quelques petits détails à revoir.";
+    else if (percentage >= 50) feedback = "Pas mal, mais il y a encore de la marge de progression.";
+    else feedback = "Aïe... Une petite révision s'impose !";
+
     return (
-      <div className="py-12 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8 sm:p-12 text-center">
-          <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 className="w-12 h-12 text-blue-600" />
+      <div className="py-12 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8 sm:p-12">
+          <div className="text-center mb-10">
+            <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 className="w-12 h-12 text-blue-600" />
+            </div>
+            <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Quiz terminé !</h2>
+            <p className="text-xl text-gray-600 mb-2">
+              Score : <strong className="text-gray-900 font-bold">{score} / {activeQuestions.length}</strong> ({percentage}%)
+            </p>
+            <p className="text-lg font-medium text-blue-600">{feedback}</p>
           </div>
-          <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Quiz terminé !</h2>
-          <p className="text-xl text-gray-600 mb-10">
-            Vous avez obtenu <strong className="text-gray-900 font-bold">{score} / {activeQuestions.length}</strong> en {selectedSubject} ({selectedDifficulty}).
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+          {wrongAnswers.length > 0 && (
+            <div className="mb-10 text-left">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 border-b pb-4">Bilan de vos erreurs</h3>
+              <div className="space-y-6">
+                {wrongAnswers.map((err, idx) => (
+                  <div key={idx} className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                    <h4 className="text-lg font-bold text-gray-900 mb-4">Question : {err.question.question}</h4>
+                    
+                    <div className="flex flex-col sm:flex-row gap-4 mb-4">
+                      <div className="flex-1 flex items-start gap-3 text-red-700 bg-red-50 p-4 rounded-xl border border-red-100">
+                        <XCircle className="w-5 h-5 shrink-0 mt-0.5" />
+                        <div>
+                          <span className="font-semibold text-sm block mb-1">Votre réponse :</span>
+                          <span className="font-medium">{err.userAnswer}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex-1 flex items-start gap-3 text-green-700 bg-green-50 p-4 rounded-xl border border-green-100">
+                        <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
+                        <div>
+                          <span className="font-semibold text-sm block mb-1">Bonne réponse :</span>
+                          <span className="font-medium">{err.question.answer}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100/50">
+                      <span className="font-bold text-blue-800 text-sm flex items-center gap-2 mb-2">
+                        <BrainCircuit className="w-5 h-5" /> Conseil d'amélioration
+                      </span>
+                      <p className="text-blue-900 text-sm leading-relaxed">{err.question.explanation}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {wrongAnswers.length === 0 && (
+            <div className="mb-10 text-center p-8 bg-green-50 rounded-2xl border border-green-100">
+              <h3 className="text-2xl font-bold text-green-800 mb-2">Félicitations !</h3>
+              <p className="text-green-700">Vous avez maîtrisé ce sujet à la perfection. Passez au niveau supérieur !</p>
+            </div>
+          )}
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
             <button
               onClick={resetQuiz}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gray-100 text-gray-800 font-semibold hover:bg-gray-200 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gray-100 text-gray-800 font-bold hover:bg-gray-200 transition-colors"
             >
-              <RotateCcw className="w-4 h-4" /> Rejouer ce quiz
+              <RotateCcw className="w-5 h-5" /> Rejouer ce quiz
             </button>
             <button
               onClick={backToMenu}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors shadow-sm"
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gray-900 text-white font-bold hover:bg-gray-800 transition-colors shadow-md"
             >
               Choisir un autre quiz
             </button>
