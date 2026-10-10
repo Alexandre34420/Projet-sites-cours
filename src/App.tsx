@@ -13,46 +13,46 @@ function App() {
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
-            
-            <Route 
-              path="/python" 
+
+            <Route
+              path="/python"
               element={
-                <CourseView 
-                  title="Python Cheat Sheet" 
+                <CourseView
+                  title="Python Cheat Sheet"
                   description="Bases, Structures, POO, et Data Science avec Python."
-                  data={pythonData} 
+                  data={pythonData}
                 />
-              } 
+              }
             />
-            
-            <Route 
-              path="/architecture" 
+
+            <Route
+              path="/architecture"
               element={
-                <CourseView 
-                  title="Architecture & Modélisation" 
+                <CourseView
+                  title="Architecture & Modélisation"
                   description="Diagrammes UML, Modèles C4 et concepts architecturaux."
-                  data={architectureData} 
+                  data={architectureData}
                 />
-              } 
+              }
             />
-            
-            <Route 
-              path="/java" 
+
+            <Route
+              path="/java"
               element={
-                <CourseView 
-                  title="Java & POO" 
+                <CourseView
+                  title="Java & POO"
                   description="Classes, Objets, Encapsulation et méthodes usuelles."
-                  data={javaData} 
+                  data={javaData}
                 />
-              } 
+              }
             />
-            
+
             <Route path="/qcm" element={<QuizPage />} />
-            
+
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
-        
+
         <footer className="mt-auto border-t border-gray-200 bg-white py-8 text-center text-sm text-gray-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="font-semibold text-gray-900">DevSheets Pro</div>
