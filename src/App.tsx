@@ -7,7 +7,7 @@ import { pythonData, architectureData, javaData } from './data';
 
 function App() {
   return (
-    <BrowserRouter basename="/python-cheatsheet-pro">
+    <BrowserRouter basename="/Projet-sites-cours">
       <div className="min-h-screen bg-gray-50 font-sans selection:bg-blue-100 selection:text-blue-900 flex flex-col">
         <Navbar />
         <div className="flex-1">
