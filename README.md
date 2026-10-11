@@ -2,7 +2,7 @@
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Le projet a été crée à la base avec Google AI Studio donc on peut lancer le projet avec NPM de Node js ou voir depuis le lien github.io 
+# Le projet a été créé à la base avec Google AI Studio puis on peut lancer le projet avec NPM de Node js en récupérant le dépôt en local ou voir depuis le lien github.io en description.
 
 # Run and deploy your AI Studio app
 
