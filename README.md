@@ -17,3 +17,6 @@ https://ai.studio/apps/4750cd74-1d3e-4814-a934-4a93fd56f721
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+Voici un projet pour avoir ses cours en informatique résumé depuis ce site 
+et s'entrainer sur des QCM par niveaux pour chaque notions
