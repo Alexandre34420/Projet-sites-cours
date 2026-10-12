@@ -1,5 +1,7 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { qcmData, QcmItem } from '../data';
+import { useAuth } from '../context/AuthContext';
 import { 
   CheckCircle2, 
   XCircle, 
@@ -35,6 +37,7 @@ const SUBJECT_ITEMS: SubjectConfig[] = [
 ];
 
 export function QuizPage() {
+  const { isAuthenticated, recordQuizResult } = useAuth();
   const [selectedSubject, setSelectedSubject] = useState<SubjectFilter>('Tous');
   const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultyFilter>('tous');
 
@@ -123,6 +126,9 @@ export function QuizPage() {
       setShowResult(false);
     } else {
       setQuizFinished(true);
+      if (isAuthenticated) {
+        recordQuizResult(score, activeQuestions.length);
+      }
     }
   };
 
@@ -298,6 +304,21 @@ export function QuizPage() {
             >
               Passer à toutes les matières
             </button>
+            {isAuthenticated ? (
+              <Link
+                to="/profile"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-50 text-blue-700 font-bold hover:bg-blue-100 transition-colors text-sm"
+              >
+                <Trophy className="w-4 h-4" /> Mon profil & stats
+              </Link>
+            ) : (
+              <Link
+                to="/auth?mode=register"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors shadow-xs text-sm"
+              >
+                <Sparkles className="w-4 h-4" /> Sauvegarder mes scores
+              </Link>
+            )}
           </div>
         </div>
       ) : activeQuestions.length === 0 ? (
