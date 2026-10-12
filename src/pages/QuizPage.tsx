@@ -11,10 +11,11 @@ import {
   GraduationCap, 
   Terminal,
   Trophy,
-  Sparkles
+  Sparkles,
+  Globe
 } from 'lucide-react';
 
-type SubjectFilter = 'Tous' | 'Architecture' | 'Python' | 'Java' | 'Langage C';
+type SubjectFilter = 'Tous' | 'Architecture' | 'Python' | 'Java' | 'Langage C' | 'Développement Web';
 type DifficultyFilter = 'tous' | 'debutant' | 'intermediaire' | 'expert';
 
 interface SubjectConfig {
@@ -30,6 +31,7 @@ const SUBJECT_ITEMS: SubjectConfig[] = [
   { id: 'Python', label: 'Python', icon: Code, iconColor: 'text-emerald-600' },
   { id: 'Java', label: 'Java', icon: Coffee, iconColor: 'text-amber-600' },
   { id: 'Langage C', label: 'Langage C', icon: Terminal, iconColor: 'text-cyan-600' },
+  { id: 'Développement Web', label: 'Développement Web', icon: Globe, iconColor: 'text-orange-600' },
 ];
 
 export function QuizPage() {
@@ -50,7 +52,8 @@ export function QuizPage() {
       'Architecture': 0,
       'Python': 0,
       'Java': 0,
-      'Langage C': 0
+      'Langage C': 0,
+      'Développement Web': 0
     };
     qcmData.forEach((q) => {
       const s = q.subject;
@@ -58,6 +61,7 @@ export function QuizPage() {
       else if (s === 'Python') counts['Python']++;
       else if (s === 'Java') counts['Java']++;
       else if (s === 'Langage C' || s.toLowerCase() === 'c') counts['Langage C']++;
+      else if (s === 'Développement Web' || s.toLowerCase().includes('web')) counts['Développement Web']++;
     });
     return counts;
   }, []);
@@ -180,21 +184,29 @@ export function QuizPage() {
       </div>
 
       {/* 2. Difficulty Filter */}
-      <div className="flex items-center justify-center gap-1 bg-white p-1 rounded-xl border border-gray-200 max-w-md mx-auto mb-8 shadow-xs">
-        {(['tous', 'debutant', 'intermediaire', 'expert'] as DifficultyFilter[]).map((diff) => (
-          <button
-            key={diff}
-            onClick={() => handleDifficultyChange(diff)}
-            className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all capitalize ${
-              selectedDifficulty === diff
-                ? 'bg-blue-600 text-white shadow-xs'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-            }`}
-          >
-            {diff === 'tous' ? 'Tous niveaux' : diff.replace('e', 'é')}
-          </button>
-        ))}
-      </div>
+      {selectedSubject !== 'Développement Web' ? (
+        <div className="flex items-center justify-center gap-1 bg-white p-1 rounded-xl border border-gray-200 max-w-md mx-auto mb-8 shadow-xs">
+          {(['tous', 'debutant', 'intermediaire', 'expert'] as DifficultyFilter[]).map((diff) => (
+            <button
+              key={diff}
+              onClick={() => handleDifficultyChange(diff)}
+              className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all capitalize ${
+                selectedDifficulty === diff
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`}
+            >
+              {diff === 'tous' ? 'Tous niveaux' : diff.replace('e', 'é')}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center mb-8">
+          <span className="inline-block px-3 py-1 rounded-full bg-orange-50 text-orange-700 text-xs font-semibold border border-orange-200">
+            5 questions clés de révision Web (HTML, CSS, JS, PHP)
+          </span>
+        </div>
+      )}
 
       {/* Quiz Finished View */}
       {quizFinished ? (

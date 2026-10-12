@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Code, GraduationCap, Coffee, BrainCircuit, ArrowRight, Terminal } from 'lucide-react';
+import { Code, GraduationCap, Coffee, BrainCircuit, ArrowRight, Terminal, Globe } from 'lucide-react';
 
 export function Home() {
   const categories = [
@@ -30,6 +30,13 @@ export function Home() {
       icon: <Terminal className="w-8 h-8 text-cyan-600" />,
       to: '/c',
       color: 'bg-cyan-50 border-cyan-100 hover:border-cyan-300'
+    },
+    {
+      title: 'Développement Web',
+      description: 'Maîtrisez HTML5, CSS3, JavaScript moderne et le backend PHP avec PDO et sessions.',
+      icon: <Globe className="w-8 h-8 text-orange-600" />,
+      to: '/web',
+      color: 'bg-orange-50 border-orange-100 hover:border-orange-300'
     },
     {
       title: 'QCM Interactif',

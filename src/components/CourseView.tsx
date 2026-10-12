@@ -11,6 +11,15 @@ interface CourseViewProps {
   language?: string;
 }
 
+const getCodeLanguage = (category: string, defaultLanguage = 'python'): string => {
+  const cat = (category || '').toLowerCase();
+  if (cat.includes('html')) return 'html';
+  if (cat.includes('css')) return 'css';
+  if (cat.includes('javascript') || cat.includes('js')) return 'javascript';
+  if (cat.includes('php')) return 'php';
+  return defaultLanguage;
+};
+
 export function CourseView({ title, description, data, language = 'python' }: CourseViewProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('Tous');
@@ -114,7 +123,7 @@ export function CourseView({ title, description, data, language = 'python' }: Co
                       )}
                     </button>
                     <SyntaxHighlighter
-                      language={language}
+                      language={getCodeLanguage(item.category, language)}
                       style={vscDarkPlus}
                       customStyle={{
                         margin: 0,

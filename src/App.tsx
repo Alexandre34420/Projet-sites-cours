@@ -3,7 +3,7 @@ import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
 import { CourseView } from './components/CourseView';
 import { QuizPage } from './pages/QuizPage';
-import { pythonData, architectureData, javaData, cData } from './data';
+import { pythonData, architectureData, javaData, cData, webData } from './data';
 
 function App() {
   return (
@@ -57,6 +57,18 @@ function App() {
                   description="Compilation, mémoire dynamique, pointeurs, tableaux et structures en C."
                   data={cData}
                   language="c"
+                />
+              }
+            />
+
+            <Route
+              path="/web"
+              element={
+                <CourseView
+                  title="Développement Web (HTML, CSS, JS, PHP)"
+                  description="DOM, balises sémantiques, styles & responsive, événements JS, backend PHP et PDO."
+                  data={webData}
+                  language="html"
                 />
               }
             />

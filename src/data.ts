@@ -159,6 +159,122 @@ export const cData: CourseItem[] = [
   }
 ];
 
+export const webData: CourseItem[] = [
+  {
+    id: "w1",
+    category: "HTML",
+    title: "Structure de base (DOM)",
+    content: "HTML5 formalise l'écriture d'un document Web vu comme un arbre DOM (Document Object Model). Le DOCTYPE indique au navigateur comment interpréter la page. Le <head> contient les métadonnées, le <body> le contenu visible.",
+    code: "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n    <meta charset=\"utf-8\">\n    <title>Mon Site</title>\n</head>\n<body>\n    <header>\n        <h1>Titre Principal</h1>\n    </header>\n    <section>\n        <p>Mon premier <strong>paragraphe</strong>.</p>\n    </section>\n</body>\n</html>"
+  },
+  {
+    id: "w2",
+    category: "HTML",
+    title: "Balises usuelles & Sémantique",
+    content: "Les balises peuvent être imbriquées (sans chevauchement) ou auto-fermantes (ex: <br/>, <img/>). HTML5 apporte des balises sémantiques : <article>, <section>, <nav>, <header>, <footer>, <aside>.",
+    code: "<!-- Images et Liens -->\n<img src=\"image.png\" alt=\"Description\" width=\"200\">\n<a href=\"http://efrei.fr\">Site Efrei</a>\n\n<!-- Listes -->\n<ul> <!-- ou <ol> pour ordonnée -->\n    <li>Élément 1</li>\n    <li>Élément 2</li>\n</ul>\n\n<!-- Formulaires -->\n<form method=\"post\" action=\"cible.php\">\n    <input type=\"text\" name=\"pseudo\">\n    <input type=\"radio\" value=\"H\" name=\"genre\">\n    <button type=\"submit\">Envoyer</button>\n</form>"
+  },
+  {
+    id: "w3",
+    category: "CSS",
+    title: "Syntaxe, Sélecteurs & Héritage",
+    content: "CSS gère l'apparence. Une règle = Sélecteur { Propriété: Valeur; }. On l'inclut via <link rel=\"stylesheet\" href=\"style.css\">. Spécificité : id (#) > classe (.) > balise.",
+    code: "/* Sélecteur de balise, de classe et d'ID */\nh1 { color: blue; }\n.title { font-weight: bold; }\n#main-menu { background-color: #333; }\n\n/* Combinateurs */\nh1 ~ p { color: red; } /* Frère général */\nh1 + p { color: green;} /* Frère adjacent */\nul > li { border: 1px solid; } /* Enfant direct */\ndiv p { margin: 10px; } /* Descendant n'importe où */\n\n/* Héritage */\n.reset strong { color: initial; }\n.inherit strong { color: inherit; }"
+  },
+  {
+    id: "w4",
+    category: "CSS",
+    title: "Responsive Design & Flexbox",
+    content: "Pour adapter l'affichage, il faut la balise meta viewport, des unités relatives (%), et des Media Queries (@media) pour changer l'affichage selon la taille de l'écran. Flexbox simplifie les alignements.",
+    code: "/* HTML HEAD: <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> */\n\n/* Media Queries */\n@media screen and (max-width: 800px) {\n    body { font-size: 14px; }\n    nav { display: none; }\n}\n\n/* Flexbox */\n.box {\n    display: flex;\n    flex-direction: row-reverse;\n    flex-wrap: wrap; /* ou flex-flow: wrap */\n}"
+  },
+  {
+    id: "w5",
+    category: "JavaScript",
+    title: "Bases & DOM",
+    content: "JS est un langage dynamique, sensible à la casse, exécuté par le navigateur. Il modifie le DOM via la variable globale 'document'.",
+    code: "let x = 1;\nconst PI = 3.14;\n\n// Récupération DOM\nlet btn = document.getElementById('b1');\nlet paragraphe = document.querySelector('.texte');\n\n// Modification\nparagraphe.textContent = 'Texte modifié dynamiquement';\n// EVITER innerHTML pour la sécurité\n\n// Affichage et concaténation ES6\nconsole.log(`Valeur de x : ${x}`);\nalert('Bonjour !');"
+  },
+  {
+    id: "w6",
+    category: "JavaScript",
+    title: "Événements & Asynchrone",
+    content: "JS réagit aux actions via addEventListener. event.preventDefault() annule le comportement par défaut (rechargement d'un form). L'asynchrone permet de ne pas bloquer le thread principal (ex: setTimeout, fetch).",
+    code: "let elt = document.getElementById('mon-lien');\n\nelt.addEventListener('click', function(event) {\n    event.preventDefault();\n    console.log(\"Clic bloqué !\");\n});\n\n// Asynchrone : setTimeout\nsetTimeout(() => {\n    console.log(\"Affiché après 3 secondes\");\n}, 3000);\n\n// API Fetch avec Promise (.then)\nfetch('data.json').then(response => {\n    console.log(response.status);\n});"
+  },
+  {
+    id: "w7",
+    category: "JavaScript",
+    title: "Objets, Classes & JSON",
+    content: "En JS, on peut créer des objets avec des paires clé/valeur, ajouter des getters/setters, ou utiliser la syntaxe de classe ES6. JSON est utilisé pour échanger des données.",
+    code: "// Objet JS classique\nlet etudiant = {\n    nom: 'Doe',\n    age: 20,\n    saluer: function() { alert('Bonjour ' + this.nom); }\n};\n\n// Classe ES6\nclass Personne {\n    constructor(nom) { this.nom = nom; }\n    get nomComplet() { return this.nom; }\n}\n\n// JSON (JavaScript Object Notation)\nlet jsonString = JSON.stringify(etudiant); // Objet vers Texte\nlet obj = JSON.parse(jsonString); // Texte vers Objet"
+  },
+  {
+    id: "w8",
+    category: "PHP",
+    title: "Bases & Transmission de Données",
+    content: "PHP s'exécute côté serveur. Le fichier doit avoir l'extension .php. Les données transitent par l'URL ($_GET) ou par formulaire ($_POST).",
+    code: "<?php\n// Inclusions pour éviter la répétition (header, footer)\ninclude(\"menu.php\");\n\n// Variables (commencent par $)\n$age = 17;\necho \"J'ai \" . $age . \" ans\"; // Concaténation avec le point (.)\n\n// Récupération de formulaire (method=\"POST\")\nif(isset($_POST['prenom'])) {\n    echo \"Bonjour \" . $_POST['prenom'];\n}\n\n// Récupération depuis l'URL (?nom=Hamidi)\necho $_GET['nom'];\n?>"
+  },
+  {
+    id: "w9",
+    category: "PHP",
+    title: "Base de données (PDO)",
+    content: "PDO (PHP Data Objects) est l'API recommandée pour se connecter à MySQL de manière sécurisée (gestion des exceptions).",
+    code: "<?php\n$host = 'localhost';\n$user = 'root';\n$pass = 'root';\n\ntry {\n    // Connexion PDO\n    $conn = new PDO(\"mysql:host=$host;dbname=test\", $user, $pass);\n    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);\n    \n    // Insertion\n    $sql = \"INSERT INTO Etudiant(Nom) VALUES ('Hamidi')\";\n    $conn->exec($sql);\n    \n    // Lecture (Extraction)\n    $sth = $conn->prepare(\"SELECT prenom FROM Etudiant\");\n    $sth->execute();\n    $resultat = $sth->fetchAll(PDO::FETCH_ASSOC);\n    print_r($resultat);\n    \n} catch (PDOException $e) {\n    echo \"Erreur: \" . $e->getMessage();\n}\n?>"
+  },
+  {
+    id: "w10",
+    category: "PHP",
+    title: "Sessions & Cookies",
+    content: "Cookies = sac à dos du visiteur, stocké côté Client avec date d'expiration. Sessions = données stockées côté Serveur, temporaires (détruites à la fermeture du navigateur). Il faut appeler session_start() AVANT tout code HTML.",
+    code: "<?php\n// ------ SESSIONS ------\nsession_start(); // RÈGLE D'OR : tout en haut du fichier !\n$_SESSION['pseudo'] = 'Admin';\nunset($_SESSION['pseudo']); // Supprime la variable\n$_SESSION = array(); // Détruit toute la session\n\n// ------ COOKIES ------\n// setcookie(Nom, Valeur, Expiration)\nsetcookie('theme', 'dark', time() + 3600); // Valable 1 heure\n\n// Lire le cookie\necho $_COOKIE['theme'];\n\n// Supprimer le cookie (le faire périmer dans le passé)\nsetcookie('theme', '', time() - 1);\n?>"
+  }
+];
+
+export const qcmWebData: QcmItem[] = [
+  {
+    id: 201,
+    subject: "Développement Web",
+    question: "En HTML, quelle balise sémantique est utilisée pour représenter le pied de page d'un document ?",
+    options: ["<bottom>", "<footer>", "<aside>", "<end>"],
+    answer: "<footer>",
+    explanation: "<footer> représente le pied de page, <aside> correspond à une zone secondaire, et <header> à l'en-tête du contenu."
+  },
+  {
+    id: 202,
+    subject: "Développement Web",
+    question: "Dans un fichier CSS, que cible le sélecteur d'enfant direct 'ul > li' ?",
+    options: ["Tous les éléments <li> descendants d'un <ul>, peu importe le niveau", "Seuls les <li> qui sont directement à l'intérieur d'un <ul>, sans élément intermédiaire", "Le premier <li> d'une liste", "Tous les <ul> qui contiennent un <li>"],
+    answer: "Seuls les <li> qui sont directement à l'intérieur d'un <ul>, sans élément intermédiaire",
+    explanation: "Le combinateur enfant (>) ne sélectionne que les enfants directs, contrairement au sélecteur descendant (espace) qui cible tous les niveaux inférieurs."
+  },
+  {
+    id: 203,
+    subject: "Développement Web",
+    question: "En JavaScript, à quoi sert la fonction event.preventDefault() ?",
+    options: ["À arrêter une boucle while infinie", "À empêcher la propagation de l'événement aux éléments parents (bullage)", "À empêcher le comportement par défaut d'un événement (comme recharger la page lors d'un submit ou suivre un lien)", "À vérifier les erreurs de syntaxe"],
+    answer: "À empêcher le comportement par défaut d'un événement (comme recharger la page lors d'un submit ou suivre un lien)",
+    explanation: "C'est essentiel pour créer des applications Single Page (SPA) où l'on veut traiter la soumission d'un formulaire via JS sans recharger la page."
+  },
+  {
+    id: 204,
+    subject: "Développement Web",
+    question: "Quelle est la principale différence entre le stockage de données via les Sessions et via les Cookies en PHP ?",
+    options: ["Les sessions sont enregistrées côté Client, les cookies côté Serveur", "Les sessions expirent automatiquement à la fermeture du navigateur, les cookies peuvent persister grâce à une date d'expiration", "Les cookies sont plus sécurisés que les sessions", "Les cookies utilisent la superglobale $_SESSION"],
+    answer: "Les sessions expirent automatiquement à la fermeture du navigateur, les cookies peuvent persister grâce à une date d'expiration",
+    explanation: "Les sessions vivent sur la RAM/disque du Serveur et meurent à la fermeture. Les cookies sont des fichiers écrits sur l'ordinateur du Client (le 'sac à dos' de l'utilisateur)."
+  },
+  {
+    id: 205,
+    subject: "Développement Web",
+    question: "En PHP, quelle est la règle absolue concernant la fonction session_start() ?",
+    options: ["Elle doit être appelée obligatoirement avant tout envoi de code HTML", "Elle doit être appelée juste avant </body>", "Elle nécessite une base de données MySQL", "Elle doit être appelée après l'affichage du menu"],
+    answer: "Elle doit être appelée obligatoirement avant tout envoi de code HTML",
+    explanation: "C'est une règle stricte : session_start() modifie les en-têtes HTTP (headers). Si du texte ou du HTML a déjà été envoyé, cela génèrera une erreur fatale."
+  }
+];
+
 export { cQcmData };
 export const qcmCData: QcmItem[] = cQcmData;
 
@@ -166,5 +282,6 @@ export const qcmData: QcmItem[] = [
   ...pythonQcmData.map(q => ({ ...q, subject: "Python" })),
   ...architectureQcmData.map(q => ({ ...q, subject: "Architecture" })),
   ...javaQcmData.map(q => ({ ...q, subject: "Java" })),
-  ...cQcmData
+  ...cQcmData,
+  ...qcmWebData
 ];
