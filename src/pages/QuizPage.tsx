@@ -184,29 +184,26 @@ export function QuizPage() {
       </div>
 
       {/* 2. Difficulty Filter */}
-      {selectedSubject !== 'Développement Web' ? (
-        <div className="flex items-center justify-center gap-1 bg-white p-1 rounded-xl border border-gray-200 max-w-md mx-auto mb-8 shadow-xs">
-          {(['tous', 'debutant', 'intermediaire', 'expert'] as DifficultyFilter[]).map((diff) => (
-            <button
-              key={diff}
-              onClick={() => handleDifficultyChange(diff)}
-              className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all capitalize ${
-                selectedDifficulty === diff
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-            >
-              {diff === 'tous' ? 'Tous niveaux' : diff.replace('e', 'é')}
-            </button>
-          ))}
-        </div>
-      ) : (
-        <div className="text-center mb-8">
-          <span className="inline-block px-3 py-1 rounded-full bg-orange-50 text-orange-700 text-xs font-semibold border border-orange-200">
-            5 questions clés de révision Web (HTML, CSS, JS, PHP)
-          </span>
-        </div>
-      )}
+      <div className="flex items-center justify-center gap-1 bg-white p-1 rounded-xl border border-gray-200 max-w-md mx-auto mb-8 shadow-xs">
+        {([
+          { id: 'tous', label: 'Tous niveaux' },
+          { id: 'debutant', label: 'Débutant' },
+          { id: 'intermediaire', label: 'Intermédiaire' },
+          { id: 'expert', label: 'Expert' }
+        ] as const).map(({ id, label }) => (
+          <button
+            key={id}
+            onClick={() => handleDifficultyChange(id)}
+            className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all ${
+              selectedDifficulty === id
+                ? 'bg-blue-600 text-white shadow-xs'
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
 
       {/* Quiz Finished View */}
       {quizFinished ? (

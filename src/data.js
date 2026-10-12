@@ -6,6 +6,7 @@ export {
   cQcmData,
   qcmCData,
   webData,
+  webQcmData,
   qcmWebData,
   qcmData
 } from './data.ts';

@@ -2,6 +2,7 @@ import { pythonQcmData } from './data/qcm_python';
 import { architectureQcmData } from './data/qcm_architecture';
 import { javaQcmData } from './data/qcm_java';
 import { cQcmData } from './data/qcm_c';
+import { webQcmData } from './data/qcm_web';
 
 export interface CourseItem {
   id: string;
@@ -232,56 +233,17 @@ export const webData: CourseItem[] = [
   }
 ];
 
-export const qcmWebData: QcmItem[] = [
-  {
-    id: 201,
-    subject: "Développement Web",
-    question: "En HTML, quelle balise sémantique est utilisée pour représenter le pied de page d'un document ?",
-    options: ["<bottom>", "<footer>", "<aside>", "<end>"],
-    answer: "<footer>",
-    explanation: "<footer> représente le pied de page, <aside> correspond à une zone secondaire, et <header> à l'en-tête du contenu."
-  },
-  {
-    id: 202,
-    subject: "Développement Web",
-    question: "Dans un fichier CSS, que cible le sélecteur d'enfant direct 'ul > li' ?",
-    options: ["Tous les éléments <li> descendants d'un <ul>, peu importe le niveau", "Seuls les <li> qui sont directement à l'intérieur d'un <ul>, sans élément intermédiaire", "Le premier <li> d'une liste", "Tous les <ul> qui contiennent un <li>"],
-    answer: "Seuls les <li> qui sont directement à l'intérieur d'un <ul>, sans élément intermédiaire",
-    explanation: "Le combinateur enfant (>) ne sélectionne que les enfants directs, contrairement au sélecteur descendant (espace) qui cible tous les niveaux inférieurs."
-  },
-  {
-    id: 203,
-    subject: "Développement Web",
-    question: "En JavaScript, à quoi sert la fonction event.preventDefault() ?",
-    options: ["À arrêter une boucle while infinie", "À empêcher la propagation de l'événement aux éléments parents (bullage)", "À empêcher le comportement par défaut d'un événement (comme recharger la page lors d'un submit ou suivre un lien)", "À vérifier les erreurs de syntaxe"],
-    answer: "À empêcher le comportement par défaut d'un événement (comme recharger la page lors d'un submit ou suivre un lien)",
-    explanation: "C'est essentiel pour créer des applications Single Page (SPA) où l'on veut traiter la soumission d'un formulaire via JS sans recharger la page."
-  },
-  {
-    id: 204,
-    subject: "Développement Web",
-    question: "Quelle est la principale différence entre le stockage de données via les Sessions et via les Cookies en PHP ?",
-    options: ["Les sessions sont enregistrées côté Client, les cookies côté Serveur", "Les sessions expirent automatiquement à la fermeture du navigateur, les cookies peuvent persister grâce à une date d'expiration", "Les cookies sont plus sécurisés que les sessions", "Les cookies utilisent la superglobale $_SESSION"],
-    answer: "Les sessions expirent automatiquement à la fermeture du navigateur, les cookies peuvent persister grâce à une date d'expiration",
-    explanation: "Les sessions vivent sur la RAM/disque du Serveur et meurent à la fermeture. Les cookies sont des fichiers écrits sur l'ordinateur du Client (le 'sac à dos' de l'utilisateur)."
-  },
-  {
-    id: 205,
-    subject: "Développement Web",
-    question: "En PHP, quelle est la règle absolue concernant la fonction session_start() ?",
-    options: ["Elle doit être appelée obligatoirement avant tout envoi de code HTML", "Elle doit être appelée juste avant </body>", "Elle nécessite une base de données MySQL", "Elle doit être appelée après l'affichage du menu"],
-    answer: "Elle doit être appelée obligatoirement avant tout envoi de code HTML",
-    explanation: "C'est une règle stricte : session_start() modifie les en-têtes HTTP (headers). Si du texte ou du HTML a déjà été envoyé, cela génèrera une erreur fatale."
-  }
-];
-
 export { cQcmData };
 export const qcmCData: QcmItem[] = cQcmData;
+
+export { webQcmData };
+export const qcmWebData: QcmItem[] = webQcmData;
 
 export const qcmData: QcmItem[] = [
   ...pythonQcmData.map(q => ({ ...q, subject: "Python" })),
   ...architectureQcmData.map(q => ({ ...q, subject: "Architecture" })),
   ...javaQcmData.map(q => ({ ...q, subject: "Java" })),
   ...cQcmData,
-  ...qcmWebData
+  ...webQcmData
 ];
+
