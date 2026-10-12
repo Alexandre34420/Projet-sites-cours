@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Code, GraduationCap, Coffee, BrainCircuit, ArrowRight } from 'lucide-react';
+import { Code, GraduationCap, Coffee, BrainCircuit, ArrowRight, Terminal } from 'lucide-react';
 
 export function Home() {
   const categories = [
@@ -23,6 +23,13 @@ export function Home() {
       icon: <Coffee className="w-8 h-8 text-amber-600" />,
       to: '/java',
       color: 'bg-amber-50 border-amber-100 hover:border-amber-300'
+    },
+    {
+      title: 'Programmation C',
+      description: 'Compilation, pointeurs, gestion dynamique de la mémoire, tableaux et structures en C.',
+      icon: <Terminal className="w-8 h-8 text-cyan-600" />,
+      to: '/c',
+      color: 'bg-cyan-50 border-cyan-100 hover:border-cyan-300'
     },
     {
       title: 'QCM Interactif',

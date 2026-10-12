@@ -8,9 +8,10 @@ interface CourseViewProps {
   title: string;
   description: string;
   data: CourseItem[];
+  language?: string;
 }
 
-export function CourseView({ title, description, data }: CourseViewProps) {
+export function CourseView({ title, description, data, language = 'python' }: CourseViewProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('Tous');
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -113,7 +114,7 @@ export function CourseView({ title, description, data }: CourseViewProps) {
                       )}
                     </button>
                     <SyntaxHighlighter
-                      language="python" // We can keep python or make it dynamic, but python is fine for most, or java for java
+                      language={language}
                       style={vscDarkPlus}
                       customStyle={{
                         margin: 0,

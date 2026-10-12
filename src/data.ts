@@ -10,10 +10,18 @@ export interface CourseItem {
   code: string;
 }
 
+export interface CheatSheetItem {
+  id: number;
+  category: string;
+  title: string;
+  content?: string;
+  code: string;
+}
+
 export interface QcmItem {
   id: number;
-  subject: 'python' | 'architecture' | 'java';
-  difficulty: 'debutant' | 'intermediaire' | 'expert';
+  subject: string;
+  difficulty?: 'debutant' | 'intermediaire' | 'expert' | string;
   question: string;
   options: string[];
   answer: string;
@@ -49,8 +57,193 @@ export const javaData: CourseItem[] = [
   { id: "j5", category: "Avancé", title: "Attributs & Méthodes Static", content: "Appartient à la classe et non à l'instance. Partagé par tous les objets.", code: "public class Compteur {\n    public static int total = 0;\n\n    public Compteur() {\n        total++;\n    }\n\n    public static void afficherTotal() {\n        System.out.println(total);\n    }\n}" }
 ];
 
+export const cData: CourseItem[] = [
+  {
+    id: "c1",
+    category: "Bases (CM4)",
+    title: "Compilation, Structure & Types",
+    content: "Étapes : Code source (.c) -> Compilateur -> Code objet (.obj) -> Linker (+ Librairies) -> Exécutable (.exe). Tailles usuelles : char (1 octet), int (4 octets), float (4 octets), long (8 octets), double (8 octets).",
+    code: "#include <stdio.h>\n#define PI 3.14 // Constante (en majuscules)\n\nint main() {\n    int a = 5;          // Entier (4 octets)\n    double r = 2.5;     // Réel double précision (8 octets)\n    char c = 'A';       // Caractère simple quote (1 octet)\n    \n    // Cast explicite\n    int partie_entiere = (int) 8.324; // vaut 8\n    return 0;\n}"
+  },
+  {
+    id: "c2",
+    category: "Bases (CM4)",
+    title: "Entrées / Sorties (printf & scanf)",
+    content: "Formats : %d (int), %ld (long), %f (float), %lf (double), %c (char), %s (chaîne), %x / %X (hexadécimal), %u (unsigned), %p (pointeur). Attention : scanf nécessite '&' devant la variable (sauf pour %s).",
+    code: "#include <stdio.h>\n\nint main() {\n    int age;\n    double note;\n    \n    printf(\"Saisir age et note : \");\n    scanf(\"%d %lf\", &age, &note);\n    \n    printf(\"Age : %d ans, Note : %.2f\\n\", age, note);\n    return 0;\n}"
+  },
+  {
+    id: "c3",
+    category: "Bases (CM4)",
+    title: "Opérateurs & Pré/Post-incrémentation",
+    content: "Arithmétiques (+, -, *, /, %), Relationnels (==, !=, <, <=, >, >=), Logiques (&& ET, || OU, ! NON). En C natif, 0 = Faux (false), toute autre valeur = Vrai (true).",
+    code: "int x = 3, b;\n\n// Post-incrémentation : évalue puis incrémente\nb = x++; // b vaut 3, puis x passe à 4\n\n// Pré-décrémentation : décrémente puis évalue\nx = 3;\nb = --x; // x passe à 2, et b vaut 2\n\n// Opérateurs combinés\nx += 5;  // équivalent à x = x + 5;"
+  },
+  {
+    id: "c4",
+    category: "Bases (CM4)",
+    title: "Conditions, Boucles, Break & Continue",
+    content: "break : quitte immédiatement la boucle ou le switch. continue : saute la fin de l'itération courante et passe au tour de boucle suivant.",
+    code: "switch (mois) {\n    case 1: printf(\"Janvier\"); break;\n    case 2: printf(\"Février\"); break;\n    default: printf(\"Autre\");\n}\n\nfor (int i = 0; i < 10; i++) {\n    if (i == 5) continue; // Saute l'affichage de 5\n    if (i == 8) break;    // Arrête la boucle à 8\n    printf(\"%d \", i);\n}\n\ndo {\n    // Exécuté au moins 1 fois sans condition initiale\n} while (condition);"
+  },
+  {
+    id: "c5",
+    category: "Tableaux & Chaînes (CM5)",
+    title: "Tableaux 1D & 2D (Matrices)",
+    content: "Taille physique = cases réservées (doit être une constante à la déclaration). Taille logique = cases réellement utilisées. Saisie, affichage et comparaison se font toujours case par case avec une boucle (T1 == T2 est interdit).",
+    code: "#define MAX 20\nint tab[MAX] = {0}; // Initialise tout à 0\nint TL = 5;\n\n// Parcours 1D\nfor (int i = 0; i < TL; i++) {\n    scanf(\"%d\", &tab[i]);\n}\n\n// Tableau 2D (3 lignes, 4 colonnes)\nint M[3][4] = {{0,1,2,3}, {4,5,6,7}, {8,9,10,11}};\nprintf(\"%d\", M[1][2]); // Affiche 6"
+  },
+  {
+    id: "c6",
+    category: "Tableaux & Chaînes (CM5)",
+    title: "Algorithmes de Tri (Bulles & Sélection)",
+    content: "Tri à bulles : compare et permute les éléments adjacents. Tri par sélection : cherche l'indice du minimum dans la zone non triée et le permute avec l'élément en position i.",
+    code: "// Tri à bulles\nfor (int i = 0; i < TL - 1; i++) {\n    for (int j = 0; j < TL - i - 1; j++) {\n        if (A[j] > A[j+1]) {\n            int temp = A[j]; A[j] = A[j+1]; A[j+1] = temp;\n        }\n    }\n}\n\n// Tri par sélection\nfor (int i = 0; i < TL - 1; i++) {\n    int min = i;\n    for (int j = i + 1; j < TL; j++) {\n        if (A[j] < A[min]) min = j;\n    }\n    if (min != i) {\n        int temp = A[i]; A[i] = A[min]; A[min] = temp;\n    }\n}"
+  },
+  {
+    id: "c7",
+    category: "Tableaux & Chaînes (CM5)",
+    title: "Recherche Dichotomique",
+    content: "S'applique OBLIGATOIREMENT sur un tableau trié. Divise l'intervalle de recherche [g, d] par 2 à chaque étape grâce à l'indice médian m = (g + d) / 2.",
+    code: "int g = 0, d = TL - 1, m, pos = -1, arret = 0;\ndo {\n    m = (g + d) / 2;\n    if (val == A[m]) {\n        pos = m; arret = 1;\n    } else if (val > A[m]) {\n        g = m + 1; // Moitié supérieure\n    } else {\n        d = m - 1; // Moitié inférieure\n    }\n    if (g > d) arret = 1;\n} while (arret != 1);"
+  },
+  {
+    id: "c8",
+    category: "Tableaux & Chaînes (CM5)",
+    title: "Chaînes de caractères & <string.h>",
+    content: "Une chaîne en C est un tableau de char terminé par le caractère nul '\\0'. scanf(\"%s\") s'arrête au premier espace ; utiliser fgets() pour lire une phrase.",
+    code: "#include <string.h>\nchar str[32] = \"Hello\"; // Taille physique min = 6 ('\\0' inclus)\n\n// Saisie d'une phrase avec espaces\nfgets(str, sizeof(str), stdin);\nstr[strcspn(str, \"\\n\")] = '\\0'; // Supprime le '\\n'\n\n// Fonctions de <string.h>\nint len = strlen(str);       // Taille logique (sans '\\0')\nstrcpy(dest, src);           // Copie src dans dest\nstrcat(dest, src);           // Concatène src à la fin de dest\nif (strcmp(s1, s2) == 0) {}  // 0 si égales, <0 si s1<s2, >0 si s1>s2"
+  },
+  {
+    id: "c9",
+    category: "Pointeurs & Mémoire (CM6)",
+    title: "Pointeurs & Doubles Pointeurs",
+    content: "Un pointeur stocke une adresse mémoire. '&' = opérateur de référencement (donne l'adresse). '*' = opérateur de déréférencement (donne la valeur pointée).",
+    code: "int x = 10, y = 20;\nint *ptr = NULL;          // Déclaration et initialisation sécurisée\nptr = &x;                 // ptr stocke l'adresse de x\n*ptr = 100;               // Modifie x à 100 par adressage indirect\n\n// Double pointeur (pointeur sur pointeur)\nint **double_ptr = &ptr;\n**double_ptr = 200;       // Modifie x à 200\n*double_ptr = &y;         // Redirige ptr pour qu'il pointe sur y"
+  },
+  {
+    id: "c10",
+    category: "Pointeurs & Mémoire (CM6)",
+    title: "Pointeurs & Tableaux (1D et 2D)",
+    content: "Le nom d'un tableau T est un pointeur constant sur son premier élément (T == &T[0]). L'arithmétique des pointeurs multiplie automatiquement le décalage par sizeof(type).",
+    code: "int T[5] = {15, 17, 8, 23, 37};\nint *p = T;\n\n// Équivalences 1D :\n// T[i]   <=> *(T + i)   <=> *(p + i)\n// &T[i]  <=> (T + i)    <=> (p + i)\nprintf(\"%d\", *(T + 3)); // Affiche T[3] soit 23\nprintf(\"%d\", *p + 4);   // Affiche T[0] + 4 soit 19 (attention aux parenthèses !)\n\n// Équivalences 2D (Matrice M) :\n// M[i][j]  <=> *(*(M + i) + j)\n// &M[i][j] <=> (*(M + i) + j)"
+  },
+  {
+    id: "c11",
+    category: "Pointeurs & Mémoire (CM6)",
+    title: "Allocation Dynamique 1D & 2D (<stdlib.h>)",
+    content: "Pile (Stack) : variables locales, gestion auto. Tas (Heap) : allocation dynamique manuelle via malloc (non initialisé), calloc (initialisé à 0), realloc (redimensionne) et free (libère).",
+    code: "#include <stdlib.h>\n\n// Allocation 1D\nint *T = (int*) malloc(N * sizeof(int));\nint *T_zero = (int*) calloc(N, sizeof(int));\nT = realloc(T, new_N * sizeof(int));\nfree(T);\nT = NULL; // Bonne pratique après free()\n\n// Allocation dynamique 2D (nb_lig x nb_col)\nint **M = (int**) malloc(nb_lig * sizeof(int*));\nfor (int i = 0; i < nb_lig; i++) {\n    M[i] = (int*) malloc(nb_col * sizeof(int));\n}\n\n// Libération 2D (ordre inverse !)\nfor (int i = 0; i < nb_lig; i++) free(M[i]);\nfree(M);\nM = NULL;"
+  },
+  {
+    id: "c12",
+    category: "Fonctions & Modules (CM7)",
+    title: "Fonctions & Passage de paramètres",
+    content: "Passage par valeur : copie la donnée (l'original dans main n'est pas modifié). Passage par adresse : utilise des pointeurs pour modifier directement les variables du programme appelant.",
+    code: "// Passage par adresse (permet de modifier x et y du main)\nvoid permutation(int *x, int *y) {\n    int temp = *x;\n    *x = *y;\n    *y = temp;\n}\n\n// Passage d'un tableau (toujours passé par adresse sans '&')\nvoid afficherTab(int *tab, int taille) {\n    for (int i = 0; i < taille; i++) printf(\"%d \", tab[i]);\n}\n\nint main() {\n    int a = 3, b = 4, T[3] = {1, 2, 3};\n    permutation(&a, &b); // a=4, b=3\n    afficherTab(T, 3);   // Pas de '&' devant T\n    return 0;\n}"
+  },
+  {
+    id: "c13",
+    category: "Fonctions & Modules (CM7)",
+    title: "Modules (.h / .c) & Librairies standards",
+    content: "Un module sépare l'interface (.h : types, prototypes, gardes d'inclusion) de l'implémentation (.c : définitions des fonctions). Librairies utiles : <stdbool.h>, <math.h> (pow, sqrt), <stdlib.h> (rand, srand).",
+    code: "// --- Fichier rectangle.h ---\n#ifndef RECTANGLE_H\n#define RECTANGLE_H\nfloat aire(float l, float L);\n#endif\n\n// --- Fichier rectangle.c ---\n#include \"rectangle.h\" // Guillemets pour un module local\nfloat aire(float l, float L) {\n    return l * L;\n}\n\n// --- Aléatoire (<stdlib.h>) ---\nsrand(57); // Initialisation de la graine (seed)\nint n = rand() % 100; // Nombre entre 0 et 99"
+  },
+  {
+    id: "c14",
+    category: "Types & Structures (CM8)",
+    title: "Typedef, Enum & Structures",
+    content: "typedef crée un alias de type. enum définit une liste de constantes entières (0, 1, 2... par défaut). struct regroupe des attributs de types différents. Accès direct par '.' et accès via pointeur par '->'.",
+    code: "typedef enum { LUNDI, MARDI, MERCREDI } JOUR; // 0, 1, 2\n\ntypedef struct {\n    int jour, mois, annee;\n} DATE;\n\ntypedef struct {\n    char nom[50];\n    int age;\n    DATE dNaiss; // Composition de structures\n} STUDENT;\n\nvoid afficher(STUDENT *s) { // Passage par adresse recommandé\n    // s->age équivaut à (*s).age\n    printf(\"%s (%d ans), né le %d/%d/%d\\n\", \n           s->nom, s->age, s->dNaiss.jour, s->dNaiss.mois, s->dNaiss.annee);\n}"
+  }
+];
+
+export const qcmCData: QcmItem[] = [
+  {
+    id: 101,
+    subject: "Langage C",
+    question: "Quelle est la valeur de b et de x après l'exécution de : int x = 3; int b = x++; ?",
+    options: ["b = 3 et x = 4", "b = 4 et x = 4", "b = 3 et x = 3", "Erreur de compilation"],
+    answer: "b = 3 et x = 4",
+    explanation: "Il s'agit d'une post-incrémentation (x++) : la valeur actuelle de x (3) est d'abord affectée à b, puis x est incrémenté de 1 (passe à 4)."
+  },
+  {
+    id: 102,
+    subject: "Langage C",
+    question: "Pourquoi n'utilise-t-on pas l'opérateur '&' devant le nom de la variable lors d'un scanf(\"%s\", mot) ?",
+    options: ["Parce que %s gère automatiquement les pointeurs", "Parce que le nom d'un tableau (ou chaîne) est déjà l'adresse de son premier élément", "C'est facultatif en C", "Parce que les chaînes sont stockées dans le Tas (Heap)"],
+    answer: "Parce que le nom d'un tableau (ou chaîne) est déjà l'adresse de son premier élément",
+    explanation: "En C, une chaîne est un tableau de char, et le nom d'un tableau représente un pointeur constant vers sa première case (mot == &mot[0])."
+  },
+  {
+    id: 103,
+    subject: "Langage C",
+    question: "Quel caractère invisible marque obligatoirement la fin d'une chaîne de caractères en C ?",
+    options: ["'\\n'", "'\\0'", "NULL", "EOF"],
+    answer: "'\\0'",
+    explanation: "Toute chaîne de caractères en C se termine par le caractère nul '\\0'. Il faut toujours prévoir 1 case supplémentaire dans la taille physique du tableau."
+  },
+  {
+    id: 104,
+    subject: "Langage C",
+    question: "Quelle est la condition préalable indispensable pour appliquer une recherche dichotomique sur un tableau ?",
+    options: ["Le tableau doit être alloué dynamiquement", "Le tableau doit contenir un nombre pair d'éléments", "Le tableau doit être préalablement trié", "La taille physique doit être égale à la taille logique"],
+    answer: "Le tableau doit être préalablement trié",
+    explanation: "La recherche dichotomique divise l'espace de recherche par 2 en comparant la valeur cherchée avec l'élément médian, ce qui exige un tableau trié."
+  },
+  {
+    id: 105,
+    subject: "Langage C",
+    question: "Soit un tableau int tab[5] = {15, 17, 8, 23, 37}; et int *p = tab;. Que vaut l'expression *(tab + 3) et que vaut *p + 4 ?",
+    options: ["*(tab + 3) vaut 23 et *p + 4 vaut 19", "*(tab + 3) vaut 8 et *p + 4 vaut 37", "*(tab + 3) vaut 18 et *p + 4 vaut 37", "*(tab + 3) vaut 23 et *p + 4 vaut 37"],
+    answer: "*(tab + 3) vaut 23 et *p + 4 vaut 19",
+    explanation: "*(tab + 3) est équivalent à tab[3] qui vaut 23. En revanche, *p + 4 déréférence d'abord p (*p = tab[0] = 15) puis ajoute 4, ce qui donne 19 !"
+  },
+  {
+    id: 106,
+    subject: "Langage C",
+    question: "Quelle est la différence principale entre malloc() et calloc() ?",
+    options: ["malloc() est plus lent que calloc()", "calloc() alloue sur la Pile (Stack) alors que malloc() alloue sur le Tas (Heap)", "calloc() prend deux arguments et initialise tous les éléments alloués à zéro", "calloc() libère automatiquement la mémoire"],
+    answer: "calloc() prend deux arguments et initialise tous les éléments alloués à zéro",
+    explanation: "calloc(N, sizeof(type)) alloue de l'espace pour N éléments et met toutes les cases à 0, contrairement à malloc(N * sizeof(type)) qui laisse les valeurs indéfinies."
+  },
+  {
+    id: 107,
+    subject: "Langage C",
+    question: "Dans quel ordre doit-on libérer un tableau 2D (int **M) alloué dynamiquement avec nb_lig lignes ?",
+    options: ["Faire uniquement free(M);", "Faire free(M) d'abord, puis une boucle free(M[i]);", "Faire une boucle free(M[i]) pour chaque ligne d'abord, puis free(M); et enfin M = NULL;", "La mémoire d'un tableau 2D se libère automatiquement"],
+    answer: "Faire une boucle free(M[i]) pour chaque ligne d'abord, puis free(M); et enfin M = NULL;",
+    explanation: "La libération est l'exact inverse de l'allocation : si on libère M en premier, on perd les adresses des lignes M[i] et on provoque une fuite mémoire !"
+  },
+  {
+    id: 108,
+    subject: "Langage C",
+    question: "Que retourne la fonction strcmp(s1, s2) de la bibliothèque <string.h> lorsque les deux chaînes s1 et s2 sont strictement identiques ?",
+    options: ["1 (true)", "0", "-1", "La longueur de la chaîne"],
+    answer: "0",
+    explanation: "Attention au piège : strcmp retourne 0 lorsque les deux chaînes sont égales, une valeur négative si s1 < s2, et positive si s1 > s2."
+  },
+  {
+    id: 109,
+    subject: "Langage C",
+    question: "À quoi servent les directives #ifndef, #define et #endif dans un fichier d'en-tête (.h) ?",
+    options: ["À accélérer l'exécution du fichier .exe", "Ce sont des gardes d'inclusion qui empêchent qu'un fichier .h soit inclus plusieurs fois lors de la compilation", "À déclarer des variables globales constantes", "À importer automatiquement le fichier .c correspondant"],
+    answer: "Ce sont des gardes d'inclusion qui empêchent qu'un fichier .h soit inclus plusieurs fois lors de la compilation",
+    explanation: "Les gardes d'inclusion évitent les erreurs de définitions multiples lors de la compilation d'un projet modulaire."
+  },
+  {
+    id: 110,
+    subject: "Langage C",
+    question: "Soit DATE *d = &d1; un pointeur sur une structure DATE contenant un champ 'jour'. Quelles syntaxes permettent d'accéder correctement à ce champ ?",
+    options: ["d.jour ou *d->jour", "(*d).jour ou d->jour", "&d.jour ou d->*jour", "Uniquement d.jour"],
+    answer: "(*d).jour ou d->jour",
+    explanation: "Avec un pointeur sur structure, on utilise l'opérateur flèche (d->jour) sans astérisque, ou on déréférence entre parenthèses avant le point : (*d).jour."
+  }
+];
+
 export const qcmData: QcmItem[] = [
-  ...pythonQcmData,
-  ...architectureQcmData,
-  ...javaQcmData
+  ...pythonQcmData.map(q => ({ ...q, subject: "Python" })),
+  ...architectureQcmData.map(q => ({ ...q, subject: "Architecture" })),
+  ...javaQcmData.map(q => ({ ...q, subject: "Java" })),
+  ...qcmCData
 ];

@@ -3,7 +3,7 @@ import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
 import { CourseView } from './components/CourseView';
 import { QuizPage } from './pages/QuizPage';
-import { pythonData, architectureData, javaData } from './data';
+import { pythonData, architectureData, javaData, cData } from './data';
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
                   title="Python Cheat Sheet"
                   description="Bases, Structures, POO, et Data Science avec Python."
                   data={pythonData}
+                  language="python"
                 />
               }
             />
@@ -43,6 +44,19 @@ function App() {
                   title="Java & POO"
                   description="Classes, Objets, Encapsulation et méthodes usuelles."
                   data={javaData}
+                  language="java"
+                />
+              }
+            />
+
+            <Route
+              path="/c"
+              element={
+                <CourseView
+                  title="Langage C & Systèmes"
+                  description="Compilation, mémoire dynamique, pointeurs, tableaux et structures en C."
+                  data={cData}
+                  language="c"
                 />
               }
             />

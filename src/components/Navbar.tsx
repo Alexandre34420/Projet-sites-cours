@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { BookOpen, Code, Coffee, GraduationCap, BrainCircuit } from 'lucide-react';
+import { BookOpen, Code, Coffee, GraduationCap, BrainCircuit, Terminal } from 'lucide-react';
 
 export function Navbar() {
   const location = useLocation();
@@ -8,6 +8,7 @@ export function Navbar() {
     { to: '/python', label: 'Python', icon: <Code className="w-4 h-4" /> },
     { to: '/architecture', label: 'Architecture', icon: <GraduationCap className="w-4 h-4" /> },
     { to: '/java', label: 'Java', icon: <Coffee className="w-4 h-4" /> },
+    { to: '/c', label: 'Langage C', icon: <Terminal className="w-4 h-4" /> },
     { to: '/qcm', label: 'QCM', icon: <BrainCircuit className="w-4 h-4" /> },
   ];
 
