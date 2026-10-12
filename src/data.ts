@@ -1,6 +1,7 @@
 import { pythonQcmData } from './data/qcm_python';
 import { architectureQcmData } from './data/qcm_architecture';
 import { javaQcmData } from './data/qcm_java';
+import { cQcmData } from './data/qcm_c';
 
 export interface CourseItem {
   id: string;
@@ -158,92 +159,12 @@ export const cData: CourseItem[] = [
   }
 ];
 
-export const qcmCData: QcmItem[] = [
-  {
-    id: 101,
-    subject: "Langage C",
-    question: "Quelle est la valeur de b et de x après l'exécution de : int x = 3; int b = x++; ?",
-    options: ["b = 3 et x = 4", "b = 4 et x = 4", "b = 3 et x = 3", "Erreur de compilation"],
-    answer: "b = 3 et x = 4",
-    explanation: "Il s'agit d'une post-incrémentation (x++) : la valeur actuelle de x (3) est d'abord affectée à b, puis x est incrémenté de 1 (passe à 4)."
-  },
-  {
-    id: 102,
-    subject: "Langage C",
-    question: "Pourquoi n'utilise-t-on pas l'opérateur '&' devant le nom de la variable lors d'un scanf(\"%s\", mot) ?",
-    options: ["Parce que %s gère automatiquement les pointeurs", "Parce que le nom d'un tableau (ou chaîne) est déjà l'adresse de son premier élément", "C'est facultatif en C", "Parce que les chaînes sont stockées dans le Tas (Heap)"],
-    answer: "Parce que le nom d'un tableau (ou chaîne) est déjà l'adresse de son premier élément",
-    explanation: "En C, une chaîne est un tableau de char, et le nom d'un tableau représente un pointeur constant vers sa première case (mot == &mot[0])."
-  },
-  {
-    id: 103,
-    subject: "Langage C",
-    question: "Quel caractère invisible marque obligatoirement la fin d'une chaîne de caractères en C ?",
-    options: ["'\\n'", "'\\0'", "NULL", "EOF"],
-    answer: "'\\0'",
-    explanation: "Toute chaîne de caractères en C se termine par le caractère nul '\\0'. Il faut toujours prévoir 1 case supplémentaire dans la taille physique du tableau."
-  },
-  {
-    id: 104,
-    subject: "Langage C",
-    question: "Quelle est la condition préalable indispensable pour appliquer une recherche dichotomique sur un tableau ?",
-    options: ["Le tableau doit être alloué dynamiquement", "Le tableau doit contenir un nombre pair d'éléments", "Le tableau doit être préalablement trié", "La taille physique doit être égale à la taille logique"],
-    answer: "Le tableau doit être préalablement trié",
-    explanation: "La recherche dichotomique divise l'espace de recherche par 2 en comparant la valeur cherchée avec l'élément médian, ce qui exige un tableau trié."
-  },
-  {
-    id: 105,
-    subject: "Langage C",
-    question: "Soit un tableau int tab[5] = {15, 17, 8, 23, 37}; et int *p = tab;. Que vaut l'expression *(tab + 3) et que vaut *p + 4 ?",
-    options: ["*(tab + 3) vaut 23 et *p + 4 vaut 19", "*(tab + 3) vaut 8 et *p + 4 vaut 37", "*(tab + 3) vaut 18 et *p + 4 vaut 37", "*(tab + 3) vaut 23 et *p + 4 vaut 37"],
-    answer: "*(tab + 3) vaut 23 et *p + 4 vaut 19",
-    explanation: "*(tab + 3) est équivalent à tab[3] qui vaut 23. En revanche, *p + 4 déréférence d'abord p (*p = tab[0] = 15) puis ajoute 4, ce qui donne 19 !"
-  },
-  {
-    id: 106,
-    subject: "Langage C",
-    question: "Quelle est la différence principale entre malloc() et calloc() ?",
-    options: ["malloc() est plus lent que calloc()", "calloc() alloue sur la Pile (Stack) alors que malloc() alloue sur le Tas (Heap)", "calloc() prend deux arguments et initialise tous les éléments alloués à zéro", "calloc() libère automatiquement la mémoire"],
-    answer: "calloc() prend deux arguments et initialise tous les éléments alloués à zéro",
-    explanation: "calloc(N, sizeof(type)) alloue de l'espace pour N éléments et met toutes les cases à 0, contrairement à malloc(N * sizeof(type)) qui laisse les valeurs indéfinies."
-  },
-  {
-    id: 107,
-    subject: "Langage C",
-    question: "Dans quel ordre doit-on libérer un tableau 2D (int **M) alloué dynamiquement avec nb_lig lignes ?",
-    options: ["Faire uniquement free(M);", "Faire free(M) d'abord, puis une boucle free(M[i]);", "Faire une boucle free(M[i]) pour chaque ligne d'abord, puis free(M); et enfin M = NULL;", "La mémoire d'un tableau 2D se libère automatiquement"],
-    answer: "Faire une boucle free(M[i]) pour chaque ligne d'abord, puis free(M); et enfin M = NULL;",
-    explanation: "La libération est l'exact inverse de l'allocation : si on libère M en premier, on perd les adresses des lignes M[i] et on provoque une fuite mémoire !"
-  },
-  {
-    id: 108,
-    subject: "Langage C",
-    question: "Que retourne la fonction strcmp(s1, s2) de la bibliothèque <string.h> lorsque les deux chaînes s1 et s2 sont strictement identiques ?",
-    options: ["1 (true)", "0", "-1", "La longueur de la chaîne"],
-    answer: "0",
-    explanation: "Attention au piège : strcmp retourne 0 lorsque les deux chaînes sont égales, une valeur négative si s1 < s2, et positive si s1 > s2."
-  },
-  {
-    id: 109,
-    subject: "Langage C",
-    question: "À quoi servent les directives #ifndef, #define et #endif dans un fichier d'en-tête (.h) ?",
-    options: ["À accélérer l'exécution du fichier .exe", "Ce sont des gardes d'inclusion qui empêchent qu'un fichier .h soit inclus plusieurs fois lors de la compilation", "À déclarer des variables globales constantes", "À importer automatiquement le fichier .c correspondant"],
-    answer: "Ce sont des gardes d'inclusion qui empêchent qu'un fichier .h soit inclus plusieurs fois lors de la compilation",
-    explanation: "Les gardes d'inclusion évitent les erreurs de définitions multiples lors de la compilation d'un projet modulaire."
-  },
-  {
-    id: 110,
-    subject: "Langage C",
-    question: "Soit DATE *d = &d1; un pointeur sur une structure DATE contenant un champ 'jour'. Quelles syntaxes permettent d'accéder correctement à ce champ ?",
-    options: ["d.jour ou *d->jour", "(*d).jour ou d->jour", "&d.jour ou d->*jour", "Uniquement d.jour"],
-    answer: "(*d).jour ou d->jour",
-    explanation: "Avec un pointeur sur structure, on utilise l'opérateur flèche (d->jour) sans astérisque, ou on déréférence entre parenthèses avant le point : (*d).jour."
-  }
-];
+export { cQcmData };
+export const qcmCData: QcmItem[] = cQcmData;
 
 export const qcmData: QcmItem[] = [
   ...pythonQcmData.map(q => ({ ...q, subject: "Python" })),
   ...architectureQcmData.map(q => ({ ...q, subject: "Architecture" })),
   ...javaQcmData.map(q => ({ ...q, subject: "Java" })),
-  ...qcmCData
+  ...cQcmData
 ];

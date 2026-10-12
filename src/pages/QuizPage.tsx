@@ -179,24 +179,22 @@ export function QuizPage() {
         </div>
       </div>
 
-      {/* 2. Optional Difficulty Filter (if subject is not Langage C) */}
-      {selectedSubject !== 'Langage C' && (
-        <div className="flex items-center justify-center gap-1 bg-white p-1 rounded-xl border border-gray-200 max-w-md mx-auto mb-8 shadow-xs">
-          {(['tous', 'debutant', 'intermediaire', 'expert'] as DifficultyFilter[]).map((diff) => (
-            <button
-              key={diff}
-              onClick={() => handleDifficultyChange(diff)}
-              className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all capitalize ${
-                selectedDifficulty === diff
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-            >
-              {diff === 'tous' ? 'Tous niveaux' : diff.replace('e', 'é')}
-            </button>
-          ))}
-        </div>
-      )}
+      {/* 2. Difficulty Filter */}
+      <div className="flex items-center justify-center gap-1 bg-white p-1 rounded-xl border border-gray-200 max-w-md mx-auto mb-8 shadow-xs">
+        {(['tous', 'debutant', 'intermediaire', 'expert'] as DifficultyFilter[]).map((diff) => (
+          <button
+            key={diff}
+            onClick={() => handleDifficultyChange(diff)}
+            className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all capitalize ${
+              selectedDifficulty === diff
+                ? 'bg-blue-600 text-white shadow-xs'
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+            }`}
+          >
+            {diff === 'tous' ? 'Tous niveaux' : diff.replace('e', 'é')}
+          </button>
+        ))}
+      </div>
 
       {/* Quiz Finished View */}
       {quizFinished ? (
