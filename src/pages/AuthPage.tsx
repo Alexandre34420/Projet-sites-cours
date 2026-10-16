@@ -334,6 +334,17 @@ export function AuthPage() {
             <span>Suivi des scores aux QCM</span>
           </div>
         </div>
+
+        {/* Admin Access Link */}
+        <div className="text-center mt-6">
+          <Link
+            to="/admin"
+            className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-indigo-600 font-medium transition-colors"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-indigo-500" />
+            <span>Accès Portail Administrateur</span>
+          </Link>
+        </div>
       </div>
     </div>
   );

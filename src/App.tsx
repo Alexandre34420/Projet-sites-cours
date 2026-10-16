@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
@@ -6,6 +6,8 @@ import { CourseView } from './components/CourseView';
 import { QuizPage } from './pages/QuizPage';
 import { AuthPage } from './pages/AuthPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { AdminPage } from './pages/AdminPage';
+import { ShieldCheck } from 'lucide-react';
 import { pythonData, architectureData, javaData, cData, webData, bddData } from './data';
 
 function App() {
@@ -94,6 +96,7 @@ function App() {
               <Route path="/login" element={<Navigate to="/auth" replace />} />
               <Route path="/register" element={<Navigate to="/auth?mode=register" replace />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/admin" element={<AdminPage />} />
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
@@ -103,6 +106,13 @@ function App() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="font-semibold text-gray-900">DevSheets Pro</div>
               <div>Plateforme de révision interactive & sécurisée.</div>
+              <Link
+                to="/admin"
+                className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-indigo-600 transition-colors font-medium"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-indigo-500" />
+                <span>Espace Admin</span>
+              </Link>
             </div>
           </footer>
         </div>

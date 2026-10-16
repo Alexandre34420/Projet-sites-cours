@@ -15,7 +15,8 @@ import {
   ChevronDown, 
   Menu, 
   X,
-  Sparkles
+  Sparkles,
+  ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -144,6 +145,13 @@ export function Navbar() {
                         <Sparkles className="w-4 h-4 text-gray-400" />
                         <span>Lancer un QCM</span>
                       </Link>
+                      <Link
+                        to="/admin"
+                        className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                      >
+                        <ShieldCheck className="w-4 h-4 text-indigo-500" />
+                        <span>Portail Administrateur</span>
+                      </Link>
                     </div>
 
                     <div className="border-t border-gray-100 pt-1 mt-1">
@@ -258,6 +266,18 @@ export function Navbar() {
                 <span>Mon Profil & Statistiques</span>
               </Link>
             )}
+
+            <Link
+              to="/admin"
+              className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                location.pathname === '/admin'
+                  ? 'bg-indigo-50 text-indigo-700'
+                  : 'text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              <ShieldCheck className="w-4 h-4 text-indigo-600" />
+              <span>Portail Administrateur</span>
+            </Link>
           </div>
         </div>
       )}

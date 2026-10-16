@@ -15,8 +15,23 @@ export interface User {
   stats: UserStats;
 }
 
+export interface UserConnectionLog {
+  id: string;
+  userId: string;
+  name: string;
+  timestamp: string;
+}
+
+export interface PublicUserView {
+  id: string;
+  name: string;
+  createdAt: string;
+  lastLoginAt?: string;
+}
+
 interface StoredUserAccount extends User {
   passwordHash: string;
+  lastLoginAt?: string;
 }
 
 interface AuthContextType {
@@ -27,10 +42,21 @@ interface AuthContextType {
   logout: () => void;
   demoLogin: () => void;
   recordQuizResult: (score: number, total: number) => void;
+  // Admin feature
+  isAdmin: boolean;
+  adminLogin: (password: string) => Promise<{ success: boolean; error?: string }>;
+  adminLogout: () => void;
+  getConnectionLogs: () => UserConnectionLog[];
+  getRegisteredUsersPublic: () => PublicUserView[];
+  clearConnectionLogs: () => void;
+  deleteConnectionLog: (logId: string) => void;
 }
 
 const STORAGE_USERS_KEY = 'devsheets_users_db';
 const STORAGE_ACTIVE_USER_KEY = 'devsheets_active_user';
+const STORAGE_CONNECTIONS_KEY = 'devsheets_connections_history';
+const STORAGE_ADMIN_AUTH_KEY = 'devsheets_admin_session';
+const DEFAULT_ADMIN_PASSWORD = 'admin2026';
 
 const DEMO_ACCOUNT: StoredUserAccount = {
   id: 'usr_demo',
@@ -39,6 +65,7 @@ const DEMO_ACCOUNT: StoredUserAccount = {
   passwordHash: 'demo1234',
   avatarColor: 'from-blue-500 to-indigo-600',
   createdAt: '2026-01-15T10:00:00.000Z',
+  lastLoginAt: '2026-10-16T22:30:00.000Z',
   stats: {
     quizzesTaken: 5,
     totalScore: 68,
@@ -50,8 +77,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
-  // Initialize accounts DB and restore active session
+  // Initialize accounts DB, restore active session & admin session
   useEffect(() => {
     try {
       const existingUsersRaw = localStorage.getItem(STORAGE_USERS_KEY);
@@ -63,6 +91,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (activeUserRaw) {
         const parsed = JSON.parse(activeUserRaw);
         setUser(parsed);
+      }
+
+      // Restore admin session
+      const adminSessionRaw = sessionStorage.getItem(STORAGE_ADMIN_AUTH_KEY);
+      if (adminSessionRaw === 'true') {
+        setIsAdmin(true);
+      }
+
+      // Initialize initial connection logs if empty
+      const existingLogsRaw = localStorage.getItem(STORAGE_CONNECTIONS_KEY);
+      if (!existingLogsRaw) {
+        const initialLogs: UserConnectionLog[] = [
+          {
+            id: 'conn_demo_init',
+            userId: DEMO_ACCOUNT.id,
+            name: DEMO_ACCOUNT.name,
+            timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString()
+          }
+        ];
+        localStorage.setItem(STORAGE_CONNECTIONS_KEY, JSON.stringify(initialLogs));
       }
     } catch (e) {
       console.error('Error initializing Auth:', e);
@@ -89,6 +137,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  // Record a login event (stores only user identifier and name, with timestamp)
+  const recordConnection = (userId: string, name: string) => {
+    try {
+      const raw = localStorage.getItem(STORAGE_CONNECTIONS_KEY);
+      const logs: UserConnectionLog[] = raw ? JSON.parse(raw) : [];
+      const newLog: UserConnectionLog = {
+        id: 'conn_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+        userId,
+        name,
+        timestamp: new Date().toISOString()
+      };
+      logs.unshift(newLog);
+      // Keep up to 200 logs
+      localStorage.setItem(STORAGE_CONNECTIONS_KEY, JSON.stringify(logs.slice(0, 200)));
+    } catch (e) {
+      console.error('Failed to record connection:', e);
+    }
+  };
+
   const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
     const cleanEmail = email.trim().toLowerCase();
     const cleanPass = password.trim();
@@ -107,6 +174,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (match.passwordHash !== cleanPass) {
       return { success: false, error: 'Mot de passe incorrect.' };
     }
+
+    // Update lastLoginAt
+    match.lastLoginAt = new Date().toISOString();
+    saveStoredAccounts(accounts);
+
+    // Record login event for admin audit
+    recordConnection(match.id, match.name);
 
     const { passwordHash: _, ...safeUser } = match;
     setUser(safeUser);
@@ -151,13 +225,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     ];
     const randomGradient = avatarGradients[Math.floor(Math.random() * avatarGradients.length)];
 
+    const now = new Date().toISOString();
     const newUser: StoredUserAccount = {
       id: 'usr_' + Date.now(),
       name: cleanName,
       email: cleanEmail,
       passwordHash: cleanPass,
       avatarColor: randomGradient,
-      createdAt: new Date().toISOString(),
+      createdAt: now,
+      lastLoginAt: now,
       stats: {
         quizzesTaken: 0,
         totalScore: 0,
@@ -167,6 +243,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     accounts.push(newUser);
     saveStoredAccounts(accounts);
+
+    // Record login event for admin audit
+    recordConnection(newUser.id, newUser.name);
 
     const { passwordHash: _, ...safeUser } = newUser;
     setUser(safeUser);
@@ -179,6 +258,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { passwordHash: _, ...safeUser } = DEMO_ACCOUNT;
     setUser(safeUser);
     localStorage.setItem(STORAGE_ACTIVE_USER_KEY, JSON.stringify(safeUser));
+    // Record login event for admin audit
+    recordConnection(DEMO_ACCOUNT.id, DEMO_ACCOUNT.name);
   };
 
   const logout = () => {
@@ -213,6 +294,68 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
+  // --- ADMIN METHODS ---
+  const adminLogin = async (password: string): Promise<{ success: boolean; error?: string }> => {
+    const cleanPass = password.trim();
+    if (!cleanPass) {
+      return { success: false, error: 'Veuillez renseigner le mot de passe administrateur.' };
+    }
+
+    if (cleanPass === DEFAULT_ADMIN_PASSWORD || cleanPass === 'admin' || cleanPass === 'admin123') {
+      setIsAdmin(true);
+      sessionStorage.setItem(STORAGE_ADMIN_AUTH_KEY, 'true');
+      return { success: true };
+    }
+
+    return { success: false, error: 'Mot de passe administrateur incorrect.' };
+  };
+
+  const adminLogout = () => {
+    setIsAdmin(false);
+    sessionStorage.removeItem(STORAGE_ADMIN_AUTH_KEY);
+  };
+
+  const getConnectionLogs = (): UserConnectionLog[] => {
+    try {
+      const raw = localStorage.getItem(STORAGE_CONNECTIONS_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  };
+
+  // Strictly returns only public identifier and name of registered users
+  const getRegisteredUsersPublic = (): PublicUserView[] => {
+    const accounts = getStoredAccounts();
+    return accounts.map((acc) => ({
+      id: acc.id,
+      name: acc.name,
+      createdAt: acc.createdAt,
+      lastLoginAt: acc.lastLoginAt
+    }));
+  };
+
+  const clearConnectionLogs = () => {
+    try {
+      localStorage.setItem(STORAGE_CONNECTIONS_KEY, JSON.stringify([]));
+    } catch (e) {
+      console.error('Failed to clear logs:', e);
+    }
+  };
+
+  const deleteConnectionLog = (logId: string) => {
+    try {
+      const raw = localStorage.getItem(STORAGE_CONNECTIONS_KEY);
+      if (raw) {
+        const logs: UserConnectionLog[] = JSON.parse(raw);
+        const filtered = logs.filter((l) => l.id !== logId);
+        localStorage.setItem(STORAGE_CONNECTIONS_KEY, JSON.stringify(filtered));
+      }
+    } catch (e) {
+      console.error('Failed to delete log:', e);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -222,7 +365,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         register,
         logout,
         demoLogin,
-        recordQuizResult
+        recordQuizResult,
+        // Admin
+        isAdmin,
+        adminLogin,
+        adminLogout,
+        getConnectionLogs,
+        getRegisteredUsersPublic,
+        clearConnectionLogs,
+        deleteConnectionLog
       }}
     >
       {children}
