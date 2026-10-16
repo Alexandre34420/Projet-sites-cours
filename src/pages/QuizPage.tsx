@@ -8,15 +8,18 @@ import {
   ArrowRight, 
   RotateCcw, 
   BrainCircuit, 
-  Code, 
-  Coffee, 
-  GraduationCap, 
-  Terminal,
   Trophy,
-  Sparkles,
-  Globe,
-  Database
+  Sparkles
 } from 'lucide-react';
+import { 
+  PythonIcon, 
+  JavaIcon, 
+  CIcon, 
+  WebIcon, 
+  SqlIcon, 
+  ArchitectureIcon, 
+  QuizIcon 
+} from '../components/TechIcons';
 
 type SubjectFilter = 'Tous' | 'Architecture' | 'Python' | 'Java' | 'Langage C' | 'Développement Web' | 'Bases de Données & SQL';
 type DifficultyFilter = 'tous' | 'debutant' | 'intermediaire' | 'expert';
@@ -24,19 +27,29 @@ type DifficultyFilter = 'tous' | 'debutant' | 'intermediaire' | 'expert';
 interface SubjectConfig {
   id: SubjectFilter;
   label: string;
-  icon: typeof BrainCircuit;
-  iconColor: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 const SUBJECT_ITEMS: SubjectConfig[] = [
-  { id: 'Tous', label: 'Tous', icon: BrainCircuit, iconColor: 'text-blue-600' },
-  { id: 'Architecture', label: 'Architecture', icon: GraduationCap, iconColor: 'text-purple-600' },
-  { id: 'Python', label: 'Python', icon: Code, iconColor: 'text-emerald-600' },
-  { id: 'Java', label: 'Java', icon: Coffee, iconColor: 'text-amber-600' },
-  { id: 'Langage C', label: 'Langage C', icon: Terminal, iconColor: 'text-cyan-600' },
-  { id: 'Développement Web', label: 'Développement Web', icon: Globe, iconColor: 'text-orange-600' },
-  { id: 'Bases de Données & SQL', label: 'Bases de Données & SQL', icon: Database, iconColor: 'text-indigo-600' },
+  { id: 'Tous', label: 'Tous', icon: QuizIcon },
+  { id: 'Architecture', label: 'Architecture', icon: ArchitectureIcon },
+  { id: 'Python', label: 'Python', icon: PythonIcon },
+  { id: 'Java', label: 'Java', icon: JavaIcon },
+  { id: 'Langage C', label: 'Langage C', icon: CIcon },
+  { id: 'Développement Web', label: 'Développement Web', icon: WebIcon },
+  { id: 'Bases de Données & SQL', label: 'Bases de Données & SQL', icon: SqlIcon },
 ];
+
+function getSubjectIcon(subject: string, className = "w-4 h-4") {
+  const s = subject.toLowerCase();
+  if (s.includes('python')) return <PythonIcon className={className} />;
+  if (s.includes('java') && !s.includes('script')) return <JavaIcon className={className} />;
+  if (s === 'langage c' || s === 'c') return <CIcon className={className} />;
+  if (s.includes('web') || s.includes('html') || s.includes('css') || s.includes('php') || s.includes('js')) return <WebIcon className={className} />;
+  if (s.includes('bdd') || s.includes('base') || s.includes('sql') || s.includes('données')) return <SqlIcon className={className} />;
+  if (s.includes('arch') || s.includes('uml')) return <ArchitectureIcon className={className} />;
+  return <QuizIcon className={className} />;
+}
 
 export function QuizPage() {
   const { isAuthenticated, recordQuizResult } = useAuth();
@@ -178,7 +191,7 @@ export function QuizPage() {
                     : 'bg-white text-gray-700 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isSelected ? 'text-white' : item.iconColor}`} />
+                <Icon className="w-4 h-4 shrink-0" />
                 <span>{item.label}</span>
                 <span
                   className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
@@ -355,7 +368,8 @@ export function QuizPage() {
             {/* Question meta header */}
             <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-gray-100">
               <div className="flex items-center gap-2">
-                <span className="px-3 py-1 bg-blue-50 text-blue-700 font-bold text-xs rounded-lg uppercase tracking-wider">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-blue-700 font-bold text-xs rounded-lg uppercase tracking-wider">
+                  {getSubjectIcon(question.subject, 'w-3.5 h-3.5 shrink-0')}
                   {question.subject}
                 </span>
                 {question.difficulty && (

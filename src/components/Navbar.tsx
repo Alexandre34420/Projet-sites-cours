@@ -2,23 +2,25 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   BookOpen, 
-  Code, 
-  Coffee, 
-  GraduationCap, 
-  BrainCircuit, 
-  Terminal, 
-  Globe, 
-  Database,
   LogIn, 
   User, 
   LogOut, 
   ChevronDown, 
   Menu, 
-  X,
-  Sparkles,
-  ShieldCheck
+  X, 
+  Sparkles, 
+  ShieldCheck 
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { 
+  PythonIcon, 
+  JavaIcon, 
+  CIcon, 
+  WebIcon, 
+  SqlIcon, 
+  ArchitectureIcon, 
+  QuizIcon 
+} from './TechIcons';
 
 export function Navbar() {
   const location = useLocation();
@@ -30,13 +32,13 @@ export function Navbar() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const links = [
-    { to: '/python', label: 'Python', icon: <Code className="w-4 h-4" /> },
-    { to: '/architecture', label: 'Architecture', icon: <GraduationCap className="w-4 h-4" /> },
-    { to: '/java', label: 'Java', icon: <Coffee className="w-4 h-4" /> },
-    { to: '/c', label: 'Langage C', icon: <Terminal className="w-4 h-4" /> },
-    { to: '/web', label: 'Développement Web', icon: <Globe className="w-4 h-4" /> },
-    { to: '/bdd', label: 'Bases de Données & SQL', icon: <Database className="w-4 h-4" /> },
-    { to: '/qcm', label: 'QCM', icon: <BrainCircuit className="w-4 h-4" /> },
+    { to: '/python', label: 'Python', icon: <PythonIcon className="w-4 h-4 shrink-0" /> },
+    { to: '/architecture', label: 'Architecture', icon: <ArchitectureIcon className="w-4 h-4 shrink-0" /> },
+    { to: '/java', label: 'Java', icon: <JavaIcon className="w-4 h-4 shrink-0" /> },
+    { to: '/c', label: 'Langage C', icon: <CIcon className="w-4 h-4 shrink-0" /> },
+    { to: '/web', label: 'Développement Web', icon: <WebIcon className="w-4 h-4 shrink-0" /> },
+    { to: '/bdd', label: 'Bases de Données & SQL', icon: <SqlIcon className="w-4 h-4 shrink-0" /> },
+    { to: '/qcm', label: 'QCM', icon: <QuizIcon className="w-4 h-4 shrink-0" /> },
   ];
 
   // Close dropdown on click outside

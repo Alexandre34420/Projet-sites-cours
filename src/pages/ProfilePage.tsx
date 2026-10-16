@@ -9,14 +9,16 @@ import {
   CheckCircle2, 
   LogOut, 
   ArrowRight, 
-  Code, 
-  Globe, 
-  Terminal, 
-  Sparkles,
-  GraduationCap,
-  Coffee,
-  Database
+  Sparkles
 } from 'lucide-react';
+import { 
+  PythonIcon, 
+  JavaIcon, 
+  CIcon, 
+  WebIcon, 
+  SqlIcon, 
+  ArchitectureIcon 
+} from '../components/TechIcons';
 
 export function ProfilePage() {
   const { user, logout, isAuthenticated } = useAuth();
@@ -170,8 +172,8 @@ export function ProfilePage() {
             to="/bdd"
             className="p-5 rounded-2xl border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50/50 transition-all group flex flex-col"
           >
-            <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-3">
-              <Database className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center mb-3">
+              <SqlIcon className="w-6 h-6" />
             </div>
             <div className="font-bold text-gray-900 text-sm mb-1 group-hover:text-indigo-600 transition-colors">
               Bases de Données & SQL
@@ -186,8 +188,8 @@ export function ProfilePage() {
             to="/web"
             className="p-5 rounded-2xl border border-gray-200 hover:border-orange-300 hover:bg-orange-50/50 transition-all group flex flex-col"
           >
-            <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center mb-3">
-              <Globe className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center mb-3">
+              <WebIcon className="w-6 h-6" />
             </div>
             <div className="font-bold text-gray-900 text-sm mb-1 group-hover:text-orange-600 transition-colors">
               Développement Web
@@ -202,8 +204,8 @@ export function ProfilePage() {
             to="/c"
             className="p-5 rounded-2xl border border-gray-200 hover:border-cyan-300 hover:bg-cyan-50/50 transition-all group flex flex-col"
           >
-            <div className="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center mb-3">
-              <Terminal className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center mb-3">
+              <CIcon className="w-6 h-6" />
             </div>
             <div className="font-bold text-gray-900 text-sm mb-1 group-hover:text-cyan-600 transition-colors">
               Langage C
@@ -218,8 +220,8 @@ export function ProfilePage() {
             to="/java"
             className="p-5 rounded-2xl border border-gray-200 hover:border-amber-300 hover:bg-amber-50/50 transition-all group flex flex-col"
           >
-            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-3">
-              <Coffee className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center mb-3">
+              <JavaIcon className="w-6 h-6" />
             </div>
             <div className="font-bold text-gray-900 text-sm mb-1 group-hover:text-amber-600 transition-colors">
               Java & POO
@@ -234,8 +236,8 @@ export function ProfilePage() {
             to="/python"
             className="p-5 rounded-2xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 transition-all group flex flex-col"
           >
-            <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-3">
-              <Code className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center mb-3">
+              <PythonIcon className="w-6 h-6" />
             </div>
             <div className="font-bold text-gray-900 text-sm mb-1 group-hover:text-blue-600 transition-colors">
               Python
@@ -250,8 +252,8 @@ export function ProfilePage() {
             to="/architecture"
             className="p-5 rounded-2xl border border-gray-200 hover:border-purple-300 hover:bg-purple-50/50 transition-all group flex flex-col"
           >
-            <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-3">
-              <GraduationCap className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center mb-3">
+              <ArchitectureIcon className="w-6 h-6" />
             </div>
             <div className="font-bold text-gray-900 text-sm mb-1 group-hover:text-purple-600 transition-colors">
               Architecture & UML

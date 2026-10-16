@@ -1,18 +1,20 @@
 import { Link } from 'react-router-dom';
 import { 
-  Code, 
-  GraduationCap, 
-  Coffee, 
-  BrainCircuit, 
   ArrowRight, 
-  Terminal, 
-  Globe, 
-  Database,
   UserPlus, 
   Sparkles,
   Trophy
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { 
+  PythonIcon, 
+  JavaIcon, 
+  CIcon, 
+  WebIcon, 
+  SqlIcon, 
+  ArchitectureIcon, 
+  QuizIcon 
+} from '../components/TechIcons';
 
 export function Home() {
   const { user, isAuthenticated } = useAuth();
@@ -21,49 +23,49 @@ export function Home() {
     {
       title: 'Python',
       description: 'Apprenez les bases, les structures de données, la POO et les librairies de Data Science.',
-      icon: <Code className="w-8 h-8 text-blue-600" />,
+      icon: <PythonIcon className="w-9 h-9" />,
       to: '/python',
       color: 'bg-blue-50 border-blue-100 hover:border-blue-300'
     },
     {
       title: 'Architecture & Conception',
       description: 'Maîtrisez UML, les diagrammes de séquence, et les styles architecturaux modernes.',
-      icon: <GraduationCap className="w-8 h-8 text-purple-600" />,
+      icon: <ArchitectureIcon className="w-9 h-9" />,
       to: '/architecture',
       color: 'bg-purple-50 border-purple-100 hover:border-purple-300'
     },
     {
       title: 'Java',
       description: 'Découvrez la POO, l\'encapsulation et les concepts avancés du langage Java.',
-      icon: <Coffee className="w-8 h-8 text-amber-600" />,
+      icon: <JavaIcon className="w-9 h-9" />,
       to: '/java',
       color: 'bg-amber-50 border-amber-100 hover:border-amber-300'
     },
     {
       title: 'Programmation C',
       description: 'Compilation, pointeurs, gestion dynamique de la mémoire, tableaux et structures en C.',
-      icon: <Terminal className="w-8 h-8 text-cyan-600" />,
+      icon: <CIcon className="w-9 h-9" />,
       to: '/c',
       color: 'bg-cyan-50 border-cyan-100 hover:border-cyan-300'
     },
     {
       title: 'Développement Web',
       description: 'Maîtrisez HTML5, CSS3, JavaScript moderne et le backend PHP avec PDO et sessions.',
-      icon: <Globe className="w-8 h-8 text-orange-600" />,
+      icon: <WebIcon className="w-9 h-9" />,
       to: '/web',
       color: 'bg-orange-50 border-orange-100 hover:border-orange-300'
     },
     {
       title: 'Bases de Données & SQL',
       description: 'Conception MERISE (MCD, MLD, MPD), Formes Normales (1FN, 2FN, 3FN), SQL LDD, LMD, DQL et requêtes.',
-      icon: <Database className="w-8 h-8 text-indigo-600" />,
+      icon: <SqlIcon className="w-9 h-9" />,
       to: '/bdd',
       color: 'bg-indigo-50 border-indigo-100 hover:border-indigo-300'
     },
     {
       title: 'QCM Interactif',
       description: 'Testez vos connaissances sur l\'ensemble des notions étudiées avec notre quiz interactif.',
-      icon: <BrainCircuit className="w-8 h-8 text-emerald-600" />,
+      icon: <QuizIcon className="w-9 h-9" />,
       to: '/qcm',
       color: 'bg-emerald-50 border-emerald-100 hover:border-emerald-300'
     }
