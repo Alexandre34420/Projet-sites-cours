@@ -3,6 +3,7 @@ import { architectureQcmData } from './data/qcm_architecture';
 import { javaQcmData } from './data/qcm_java';
 import { cQcmData } from './data/qcm_c';
 import { webQcmData } from './data/qcm_web';
+import { qcmBddData } from './data/qcm_bdd';
 
 export interface CourseItem {
   id: string;
@@ -233,17 +234,109 @@ export const webData: CourseItem[] = [
   }
 ];
 
+export const bddData: CourseItem[] = [
+  {
+    id: "db1",
+    category: "MCD & Merise (Chap 1)",
+    title: "Méthode MERISE & Modèle Entité/Association",
+    content: "MERISE découpe la conception en 3 niveaux : MCD (Modèle Conceptuel de Données, représentation graphique Entité/Association), MLD (Modèle Logique de Données, relationnel sous forme de tables) et MPD (Modèle Physique, implémentation SQL dans un SGBD).",
+    code: "-- Vocabulaire du MCD :\n-- 1. Entité : Objet identifiable pertinent (ex: Film, Acteur)\n-- 2. Attribut : Propriété caractérisant une entité (atomique, composé ou multivalué)\n-- 3. Identifiant : Attribut (souligné) identifiant une entité de façon unique (ex: id_film)\n-- 4. Identifiant secondaire : Attribut unique pour chaque instance (ex: CIN_Etudiant)\n-- 5. Association : Lien (verbe) reliant plusieurs entités, parfois porteuse d'attributs"
+  },
+  {
+    id: "db2",
+    category: "MCD & Merise (Chap 1)",
+    title: "Cardinalités & Bonnes pratiques MCD",
+    content: "La cardinalité est une paire [Min, Max] indiquant combien de fois (au minimum : 0 ou 1 ; au maximum : 1 ou n) une entité participe à l'association. Règles d'optimisation : noms uniques, fusionner les entités/associations similaires, supprimer les associations (1,1)-(1,1) et éviter les cycles redondants.",
+    code: "-- Lecture des cardinalités :\n-- [Artiste] 0,n ---- (Réaliser) ---- 1,1 [Film]\n-- -> Un artiste réalise 0 ou plusieurs (n) films.\n-- -> Un film est réalisé par 1 et 1 seul artiste.\n\n-- Association porteuse d'attribut :\n-- [Artiste] 0,n ---- (Participer : role) ---- 1,n [Film]"
+  },
+  {
+    id: "db3",
+    category: "Normalisation (Chap 1)",
+    title: "Anomalies & Formes Normales (1FN, 2FN, 3FN)",
+    content: "Mélanger plusieurs objets dans une même table crée des redondances qui provoquent des anomalies d'insertion, de mise à jour et de suppression. La normalisation garantit un schéma sans redondance grâce aux dépendances fonctionnelles (A -> B).",
+    code: "-- 1FN (1ère Forme Normale) :\n-- Tous les attributs sont élémentaires (atomiques, non décomposables, pas de listes).\n\n-- 2FN (2ème Forme Normale) :\n-- Être en 1FN + tout attribut non-identifiant dépend de TOUT l'identifiant\n-- (et non d'une seule partie d'une clé primaire composée).\n\n-- 3FN (3ème Forme Normale) :\n-- Être en 2FN + aucun attribut non-identifiant ne dépend d'un autre attribut\n-- non-identifiant (pas de dépendance transitive : IdFilm -> IdMES -> NomMES)."
+  },
+  {
+    id: "db4",
+    category: "MLD Relationnel (Chap 2)",
+    title: "Vocabulaire du Modèle Relationnel",
+    content: "Dans le MLD, tout est représenté sous forme de relations (tables). Une ligne est appelée un n-uplet (tuple) et une colonne est un attribut caractérisé par son domaine (type). La clé primaire est soulignée, la clé étrangère est précédée d'un dièse (#).",
+    code: "-- Exemple de schéma relationnel (MLD) :\nMES (idMES : entier, nomMES : caractères, prénomMES : caractères, annéeNaiss : entier)\nFilm (id_film : entier, titre : caractères, année : entier, #idMES : entier)\n\n-- Clé primaire (id_film) : identifie de manière unique une ligne de la table.\n-- Clé étrangère (#idMES) : fait référence à la clé primaire idMES de la table MES."
+  },
+  {
+    id: "db5",
+    category: "MLD Relationnel (Chap 2)",
+    title: "Les 3 Règles de passage MCD vers MLD",
+    content: "On traduit un diagramme Entité/Association (MCD) en schéma relationnel (MLD) en appliquant 3 règles systématiques selon les cardinalités des associations binaires.",
+    code: "-- Règle 1 (Entité -> Table) :\n-- Toute entité devient une table ; son identifiant devient la clé primaire.\n\n-- Règle 2 : Cardinalités (X,1) - (X,N) avec X = 0 ou 1\n-- La clé primaire côté (X,N) migre comme clé étrangère (#) dans la table côté (X,1).\n-- Ex : Employé (1,1) --- travailler --- (1,n) Société\nSOCIETE = (ID_SOCIETE, NOM_SOCIETE);\nEMPLOYE = (ID_EMPLOYE, NOM_EMPLOYE, #ID_SOCIETE);\n\n-- Règle 3 : Cardinalités (X,N) - (X,N) avec X = 0 ou 1\n-- Création d'une nouvelle table dont la clé primaire est la concaténation des 2 clés étrangères.\n-- Ex : Commande (0,n) --- composer (quantite) --- (0,n) Produit\nCOMPOSER = (#ID_COMMANDE, #ID_PRODUIT, QUANTITE);"
+  },
+  {
+    id: "db6",
+    category: "SQL LDD (Chap 3)",
+    title: "Bases SQL, Bases de données & Types ANSI",
+    content: "SQL est un langage déclaratif divisé en 3 sous-langages : LDD/DDL (définition des structures), LMD/DML (manipulation des données) et DQL (interrogation). Principaux types ANSI : INTEGER/INT, SMALLINT, BIGINT, FLOAT/REAL, NUMERIC(M,D), CHAR(M), VARCHAR(M), DATE ('AAAA-MM-JJ'), TIME ('HH:MM:SS'), DATETIME, YEAR.",
+    code: "-- Gestion de la base de données\nCREATE DATABASE bd_cinema;\nUSE bd_cinema;\nSHOW TABLES;\nDESCRIBE cinema;\n\n-- Suppression définitive\nDROP TABLE cinema;\nDROP DATABASE bd_cinema;"
+  },
+  {
+    id: "db7",
+    category: "SQL LDD (Chap 3)",
+    title: "CREATE TABLE & Contraintes d'intégrité",
+    content: "Contraintes principales : PRIMARY KEY (unique + non nul), FOREIGN KEY ... REFERENCES (intégrité référentielle vérifiée à l'insertion, modification et suppression), NOT NULL (obligatoire), UNIQUE (clé secondaire) et DEFAULT (valeur par défaut).",
+    code: "CREATE TABLE artiste (\n    id_artiste INT NOT NULL,\n    nom VARCHAR(50) NOT NULL,\n    prenom VARCHAR(50) NOT NULL,\n    annee_naissance INT DEFAULT 2000,\n    PRIMARY KEY (id_artiste),\n    UNIQUE (nom, prenom)\n);\n\nCREATE TABLE film (\n    id_film INT NOT NULL,\n    titre VARCHAR(50) NOT NULL,\n    id_mes INT,\n    PRIMARY KEY (id_film),\n    FOREIGN KEY (id_mes) REFERENCES artiste(id_artiste)\n);\n\n-- Clé primaire composée :\nCREATE TABLE notation (\n    id_film INT NOT NULL,\n    email VARCHAR(50) NOT NULL,\n    note INT DEFAULT 0,\n    PRIMARY KEY (id_film, email)\n);"
+  },
+  {
+    id: "db8",
+    category: "SQL LDD (Chap 3)",
+    title: "Modifier une table (ALTER TABLE)",
+    content: "La commande ALTER TABLE permet de modifier la structure d'une table existante sans perdre ses données : ajout/modification/suppression de colonnes ou ajout de contraintes.",
+    code: "-- 1. Ajouter une colonne\nALTER TABLE internaute ADD region VARCHAR(15);\n\n-- 2. Modifier le type ou la contrainte d'une colonne\nALTER TABLE internaute MODIFY region VARCHAR(30) NOT NULL;\n\n-- 3. Définir une valeur par défaut\nALTER TABLE internaute ALTER region SET DEFAULT 'PACA';\n\n-- 4. Supprimer une colonne\nALTER TABLE internaute DROP region;\n\n-- 5. Ajouter des contraintes après création\nALTER TABLE Film ADD CONSTRAINT pk_film PRIMARY KEY (ID_Film);\nALTER TABLE Film ADD CONSTRAINT fk_film FOREIGN KEY (ID_MES) REFERENCES Artiste(ID_Artiste);"
+  },
+  {
+    id: "db9",
+    category: "SQL LMD (Chap 3)",
+    title: "Insérer, Modifier, Supprimer (INSERT, UPDATE, DELETE)",
+    content: "Le LMD manipule les lignes (enregistrements). Attention : il faut toujours insérer les données dans la table parente (référencée) avant la table contenant la clé étrangère. Ne jamais oublier la clause WHERE dans un UPDATE ou DELETE !",
+    code: "-- 1. INSERT INTO (une ou plusieurs lignes)\nINSERT INTO Scene VALUES ('Mainframe', 55000), ('La Distorsion', 15000);\nINSERT INTO Concert (NumConcert, Duree, NomScene) VALUES (1, 90, 'Mainframe');\n\n-- 2. UPDATE (Modification ciblée avec WHERE)\nUPDATE Concert SET Duree = 70 WHERE NumConcert = 2;\n-- Attention : sans WHERE, toutes les lignes de la table sont modifiées !\n\n-- 3. DELETE (Suppression ciblée avec WHERE)\nDELETE FROM Concert WHERE NumConcert = 1;\n-- Attention : DELETE FROM Concert; vide intégralement la table !"
+  },
+  {
+    id: "db10",
+    category: "SQL Interrogation (Chap 4)",
+    title: "Projection, Sélection, DISTINCT & ORDER BY",
+    content: "En algèbre relationnelle, la Projection extrait des colonnes (SELECT) et la Sélection filtre les lignes (WHERE). DISTINCT élimine les doublons et ORDER BY trie les résultats (ASC par défaut, ou DESC).",
+    code: "-- Projection (colonnes) + Sélection (lignes avec WHERE, AND, OR, NOT)\nSELECT a_nom, a_prix \nFROM Article \nWHERE (a_nom = 'Ordinateur' OR a_nom = 'Ecran') \n  AND a_prix < 1000;\n\n-- Sans doublons et trié par ordre décroissant\nSELECT DISTINCT a_nom \nFROM Article \nORDER BY a_nom DESC;\n\n-- Encadrement de valeurs\nSELECT * FROM livres \nWHERE annee_publication >= 1940 AND annee_publication <= 1960;"
+  },
+  {
+    id: "db11",
+    category: "SQL Interrogation (Chap 4)",
+    title: "Fonctions d'agrégation & GROUP BY",
+    content: "Les fonctions d'agrégation calculent des statistiques : COUNT(*), COUNT(DISTINCT col), AVG() (moyenne), MIN(), MAX(), SUM() (somme). GROUP BY regroupe les lignes ayant la même valeur pour calculer l'agrégat sur chaque sous-groupe.",
+    code: "-- Statistiques globales avec alias (AS)\nSELECT AVG(a_prix) AS Moyenne, \n       MIN(a_prix) AS Minimum, \n       MAX(a_prix) AS Maximum, \n       SUM(a_prix) AS Somme, \n       COUNT(*) AS Nombre\nFROM Article;\n\n-- Compter le nombre de noms différents (DISTINCT à l'intérieur du COUNT !)\nSELECT COUNT(DISTINCT a_nom) FROM Article;\n\n-- Regroupement avec GROUP BY et tri\nSELECT espece, SUM(nombre) AS Nb_Animaux, COUNT(*) AS Nb_Observations\nFROM Observation\nGROUP BY espece\nORDER BY Nb_Observations DESC;"
+  },
+  {
+    id: "db12",
+    category: "SQL Interrogation (Chap 4)",
+    title: "Jointures internes (JOIN & Multi-tables)",
+    content: "Une jointure interne (JOIN ... ON) combine les lignes de plusieurs tables lorsque la condition d'égalité entre la clé primaire et la clé étrangère est vraie. Bonne pratique : utiliser des alias de tables et préfixer chaque colonne.",
+    code: "-- Simple jointure avec JOIN ... ON (recommandé)\nSELECT A.a_nom, Co.co_date\nFROM Article AS A\nJOIN Commande AS Co ON A.a_id = Co.a_id\nWHERE A.a_prix < 1000\nORDER BY A.a_prix DESC;\n\n-- Écriture équivalente avec produit cartésien :\nSELECT A.a_nom, Co.co_date\nFROM Article AS A, Commande AS Co\nWHERE A.a_id = Co.a_id;\n\n-- Double jointure (3 tables : Article <-> Commande <-> Client)\nSELECT A.a_nom AS NArticle, Cl.cl_nom AS NClient\nFROM Article AS A\nJOIN Commande AS Co ON A.a_id = Co.a_id\nJOIN Client AS Cl ON Cl.cl_id = Co.cl_id;"
+  }
+];
+
 export { cQcmData };
 export const qcmCData: QcmItem[] = cQcmData;
 
 export { webQcmData };
 export const qcmWebData: QcmItem[] = webQcmData;
 
+export { qcmBddData };
+export const bddQcmData: QcmItem[] = qcmBddData;
+
 export const qcmData: QcmItem[] = [
   ...pythonQcmData.map(q => ({ ...q, subject: "Python" })),
   ...architectureQcmData.map(q => ({ ...q, subject: "Architecture" })),
   ...javaQcmData.map(q => ({ ...q, subject: "Java" })),
   ...cQcmData,
-  ...webQcmData
+  ...webQcmData,
+  ...qcmBddData
 ];
+
 

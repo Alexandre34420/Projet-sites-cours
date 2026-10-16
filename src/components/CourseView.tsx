@@ -17,6 +17,7 @@ const getCodeLanguage = (category: string, defaultLanguage = 'python'): string =
   if (cat.includes('css')) return 'css';
   if (cat.includes('javascript') || cat.includes('js')) return 'javascript';
   if (cat.includes('php')) return 'php';
+  if (cat.includes('sql') || cat.includes('mcd') || cat.includes('mld') || cat.includes('merise') || cat.includes('normalisation')) return 'sql';
   return defaultLanguage;
 };
 

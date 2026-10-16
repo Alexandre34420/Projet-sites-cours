@@ -8,5 +8,8 @@ export {
   webData,
   webQcmData,
   qcmWebData,
+  bddData,
+  qcmBddData,
+  bddQcmData,
   qcmData
 } from './data.ts';

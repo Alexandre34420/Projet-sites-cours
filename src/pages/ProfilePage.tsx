@@ -13,7 +13,9 @@ import {
   Globe, 
   Terminal, 
   Sparkles,
-  GraduationCap
+  GraduationCap,
+  Coffee,
+  Database
 } from 'lucide-react';
 
 export function ProfilePage() {
@@ -163,7 +165,23 @@ export function ProfilePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <Link
+            to="/bdd"
+            className="p-5 rounded-2xl border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50/50 transition-all group flex flex-col"
+          >
+            <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-3">
+              <Database className="w-5 h-5" />
+            </div>
+            <div className="font-bold text-gray-900 text-sm mb-1 group-hover:text-indigo-600 transition-colors">
+              Bases de Données & SQL
+            </div>
+            <div className="text-xs text-gray-500 flex-1">MERISE, MCD, MLD, Normalisation et SQL (LDD, LMD, DQL).</div>
+            <div className="mt-4 flex items-center text-xs font-semibold text-indigo-600">
+              Voir la fiche <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            </div>
+          </Link>
+
           <Link
             to="/web"
             className="p-5 rounded-2xl border border-gray-200 hover:border-orange-300 hover:bg-orange-50/50 transition-all group flex flex-col"
@@ -192,6 +210,22 @@ export function ProfilePage() {
             </div>
             <div className="text-xs text-gray-500 flex-1">Pointeurs, mémoire dynamique et structures.</div>
             <div className="mt-4 flex items-center text-xs font-semibold text-cyan-600">
+              Voir la fiche <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            </div>
+          </Link>
+
+          <Link
+            to="/java"
+            className="p-5 rounded-2xl border border-gray-200 hover:border-amber-300 hover:bg-amber-50/50 transition-all group flex flex-col"
+          >
+            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-3">
+              <Coffee className="w-5 h-5" />
+            </div>
+            <div className="font-bold text-gray-900 text-sm mb-1 group-hover:text-amber-600 transition-colors">
+              Java & POO
+            </div>
+            <div className="text-xs text-gray-500 flex-1">Classes, Objets, Encapsulation et méthodes.</div>
+            <div className="mt-4 flex items-center text-xs font-semibold text-amber-600">
               Voir la fiche <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </div>
           </Link>

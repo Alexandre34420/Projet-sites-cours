@@ -8,6 +8,7 @@ import {
   BrainCircuit, 
   Terminal, 
   Globe, 
+  Database,
   LogIn, 
   User, 
   LogOut, 
@@ -33,6 +34,7 @@ export function Navbar() {
     { to: '/java', label: 'Java', icon: <Coffee className="w-4 h-4" /> },
     { to: '/c', label: 'Langage C', icon: <Terminal className="w-4 h-4" /> },
     { to: '/web', label: 'Développement Web', icon: <Globe className="w-4 h-4" /> },
+    { to: '/bdd', label: 'Bases de Données & SQL', icon: <Database className="w-4 h-4" /> },
     { to: '/qcm', label: 'QCM', icon: <BrainCircuit className="w-4 h-4" /> },
   ];
 
@@ -78,14 +80,14 @@ export function Navbar() {
           </div>
           
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-0.5 xl:space-x-1">
             {links.map((link) => {
               const isActive = location.pathname === link.to;
               return (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all ${
+                  className={`flex items-center gap-1.5 xl:gap-2 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-xl text-xs xl:text-sm font-semibold whitespace-nowrap transition-all ${
                     isActive 
                       ? 'bg-blue-50 text-blue-700' 
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'

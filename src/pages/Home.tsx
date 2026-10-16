@@ -7,6 +7,7 @@ import {
   ArrowRight, 
   Terminal, 
   Globe, 
+  Database,
   UserPlus, 
   Sparkles,
   Trophy
@@ -51,6 +52,13 @@ export function Home() {
       icon: <Globe className="w-8 h-8 text-orange-600" />,
       to: '/web',
       color: 'bg-orange-50 border-orange-100 hover:border-orange-300'
+    },
+    {
+      title: 'Bases de Données & SQL',
+      description: 'Conception MERISE (MCD, MLD, MPD), Formes Normales (1FN, 2FN, 3FN), SQL LDD, LMD, DQL et requêtes.',
+      icon: <Database className="w-8 h-8 text-indigo-600" />,
+      to: '/bdd',
+      color: 'bg-indigo-50 border-indigo-100 hover:border-indigo-300'
     },
     {
       title: 'QCM Interactif',
@@ -137,7 +145,9 @@ export function Home() {
           <Link
             key={idx}
             to={cat.to}
-            className={`flex flex-col p-8 rounded-3xl border-2 transition-all hover:shadow-lg ${cat.color} bg-opacity-50`}
+            className={`flex flex-col p-8 rounded-3xl border-2 transition-all hover:shadow-lg ${cat.color} bg-opacity-50 ${
+              cat.to === '/qcm' ? 'md:col-span-2' : ''
+            }`}
           >
             <div className="bg-white w-16 h-16 rounded-2xl flex items-center justify-center shadow-xs mb-6">
               {cat.icon}

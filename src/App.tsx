@@ -6,7 +6,7 @@ import { CourseView } from './components/CourseView';
 import { QuizPage } from './pages/QuizPage';
 import { AuthPage } from './pages/AuthPage';
 import { ProfilePage } from './pages/ProfilePage';
-import { pythonData, architectureData, javaData, cData, webData } from './data';
+import { pythonData, architectureData, javaData, cData, webData, bddData } from './data';
 
 function App() {
   return (
@@ -73,6 +73,18 @@ function App() {
                     description="DOM, balises sémantiques, styles & responsive, événements JS, backend PHP et PDO."
                     data={webData}
                     language="html"
+                  />
+                }
+              />
+
+              <Route
+                path="/bdd"
+                element={
+                  <CourseView
+                    title="Bases de Données & SQL"
+                    description="MERISE (MCD, MLD, MPD), Normalisation (1FN, 2FN, 3FN), SQL LDD, LMD, DQL et requêtes avancées."
+                    data={bddData}
+                    language="sql"
                   />
                 }
               />

@@ -14,10 +14,11 @@ import {
   Terminal,
   Trophy,
   Sparkles,
-  Globe
+  Globe,
+  Database
 } from 'lucide-react';
 
-type SubjectFilter = 'Tous' | 'Architecture' | 'Python' | 'Java' | 'Langage C' | 'Développement Web';
+type SubjectFilter = 'Tous' | 'Architecture' | 'Python' | 'Java' | 'Langage C' | 'Développement Web' | 'Bases de Données & SQL';
 type DifficultyFilter = 'tous' | 'debutant' | 'intermediaire' | 'expert';
 
 interface SubjectConfig {
@@ -34,6 +35,7 @@ const SUBJECT_ITEMS: SubjectConfig[] = [
   { id: 'Java', label: 'Java', icon: Coffee, iconColor: 'text-amber-600' },
   { id: 'Langage C', label: 'Langage C', icon: Terminal, iconColor: 'text-cyan-600' },
   { id: 'Développement Web', label: 'Développement Web', icon: Globe, iconColor: 'text-orange-600' },
+  { id: 'Bases de Données & SQL', label: 'Bases de Données & SQL', icon: Database, iconColor: 'text-indigo-600' },
 ];
 
 export function QuizPage() {
@@ -56,7 +58,8 @@ export function QuizPage() {
       'Python': 0,
       'Java': 0,
       'Langage C': 0,
-      'Développement Web': 0
+      'Développement Web': 0,
+      'Bases de Données & SQL': 0
     };
     qcmData.forEach((q) => {
       const s = q.subject;
@@ -65,6 +68,7 @@ export function QuizPage() {
       else if (s === 'Java') counts['Java']++;
       else if (s === 'Langage C' || s.toLowerCase() === 'c') counts['Langage C']++;
       else if (s === 'Développement Web' || s.toLowerCase().includes('web')) counts['Développement Web']++;
+      else if (s === 'Bases de Données & SQL' || s.toLowerCase().includes('sql') || s.toLowerCase().includes('données') || s.toLowerCase().includes('bdd')) counts['Bases de Données & SQL']++;
     });
     return counts;
   }, []);
