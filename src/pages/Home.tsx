@@ -13,7 +13,11 @@ import {
   WebIcon, 
   SqlIcon, 
   ArchitectureIcon, 
-  QuizIcon 
+  QuizIcon,
+  HtmlIcon,
+  CssIcon,
+  JsIcon,
+  PhpIcon
 } from '../components/TechIcons';
 
 export function Home() {
@@ -53,7 +57,13 @@ export function Home() {
       description: 'Maîtrisez HTML5, CSS3, JavaScript moderne et le backend PHP avec PDO et sessions.',
       icon: <WebIcon className="w-9 h-9" />,
       to: '/web',
-      color: 'bg-orange-50 border-orange-100 hover:border-orange-300'
+      color: 'bg-orange-50 border-orange-100 hover:border-orange-300',
+      badges: [
+        { label: 'HTML5', icon: <HtmlIcon className="w-3.5 h-3.5" /> },
+        { label: 'CSS3', icon: <CssIcon className="w-3.5 h-3.5" /> },
+        { label: 'JavaScript', icon: <JsIcon className="w-3.5 h-3.5" /> },
+        { label: 'PHP PDO', icon: <PhpIcon className="w-3.5 h-3.5" /> },
+      ]
     },
     {
       title: 'Bases de Données & SQL',
@@ -155,7 +165,20 @@ export function Home() {
               {cat.icon}
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-3">{cat.title}</h2>
-            <p className="text-gray-600 mb-8 flex-1">{cat.description}</p>
+            <p className="text-gray-600 mb-6 flex-1">{cat.description}</p>
+            {cat.badges && (
+              <div className="flex flex-wrap gap-2 mb-6">
+                {cat.badges.map((b, bIdx) => (
+                  <span
+                    key={bIdx}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/90 border border-orange-200 text-xs font-bold text-gray-800 shadow-2xs"
+                  >
+                    {b.icon}
+                    <span>{b.label}</span>
+                  </span>
+                ))}
+              </div>
+            )}
             <div className="flex items-center text-gray-900 font-medium group">
               Commencer à réviser 
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

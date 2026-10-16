@@ -17,7 +17,11 @@ import {
   CIcon, 
   WebIcon, 
   SqlIcon, 
-  ArchitectureIcon 
+  ArchitectureIcon,
+  HtmlIcon,
+  CssIcon,
+  JsIcon,
+  PhpIcon
 } from '../components/TechIcons';
 
 export function ProfilePage() {
@@ -194,8 +198,22 @@ export function ProfilePage() {
             <div className="font-bold text-gray-900 text-sm mb-1 group-hover:text-orange-600 transition-colors">
               Développement Web
             </div>
-            <div className="text-xs text-gray-500 flex-1">HTML, CSS, JS moderne et PHP PDO.</div>
-            <div className="mt-4 flex items-center text-xs font-semibold text-orange-600">
+            <div className="text-xs text-gray-500 mb-3">HTML5, CSS3, JS moderne et PHP PDO.</div>
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-orange-50 border border-orange-200 text-orange-800 text-[10px] font-bold">
+                <HtmlIcon className="w-3 h-3" /> HTML5
+              </span>
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-blue-50 border border-blue-200 text-blue-800 text-[10px] font-bold">
+                <CssIcon className="w-3 h-3" /> CSS3
+              </span>
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-amber-50 border border-amber-200 text-amber-900 text-[10px] font-bold">
+                <JsIcon className="w-3 h-3" /> JS
+              </span>
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-indigo-50 border border-indigo-200 text-indigo-800 text-[10px] font-bold">
+                <PhpIcon className="w-3 h-3" /> PHP
+              </span>
+            </div>
+            <div className="mt-auto pt-2 flex items-center text-xs font-semibold text-orange-600">
               Voir la fiche <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </div>
           </Link>

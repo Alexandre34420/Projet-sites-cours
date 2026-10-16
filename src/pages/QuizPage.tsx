@@ -18,7 +18,12 @@ import {
   WebIcon, 
   SqlIcon, 
   ArchitectureIcon, 
-  QuizIcon 
+  QuizIcon,
+  HtmlIcon,
+  CssIcon,
+  JsIcon,
+  PhpIcon,
+  getSubjectIcon
 } from '../components/TechIcons';
 
 type SubjectFilter = 'Tous' | 'Architecture' | 'Python' | 'Java' | 'Langage C' | 'Développement Web' | 'Bases de Données & SQL';
@@ -40,15 +45,15 @@ const SUBJECT_ITEMS: SubjectConfig[] = [
   { id: 'Bases de Données & SQL', label: 'Bases de Données & SQL', icon: SqlIcon },
 ];
 
-function getSubjectIcon(subject: string, className = "w-4 h-4") {
-  const s = subject.toLowerCase();
-  if (s.includes('python')) return <PythonIcon className={className} />;
-  if (s.includes('java') && !s.includes('script')) return <JavaIcon className={className} />;
-  if (s === 'langage c' || s === 'c') return <CIcon className={className} />;
-  if (s.includes('web') || s.includes('html') || s.includes('css') || s.includes('php') || s.includes('js')) return <WebIcon className={className} />;
-  if (s.includes('bdd') || s.includes('base') || s.includes('sql') || s.includes('données')) return <SqlIcon className={className} />;
-  if (s.includes('arch') || s.includes('uml')) return <ArchitectureIcon className={className} />;
-  return <QuizIcon className={className} />;
+function getQuestionTechIcon(q: QcmItem) {
+  if (q.subject === 'Développement Web') {
+    const text = (q.question + ' ' + (q.explanation || '')).toLowerCase();
+    if (text.includes('html') || text.includes('balise') || text.includes('doctype') || text.includes('dom')) return <HtmlIcon className="w-3.5 h-3.5 shrink-0" />;
+    if (text.includes('css') || text.includes('style') || text.includes('flexbox') || text.includes('sélecteur') || text.includes('media quer')) return <CssIcon className="w-3.5 h-3.5 shrink-0" />;
+    if (text.includes('javascript') || text.includes('addeventlistener') || text.includes('json') || text.includes('promise') || text.includes('async')) return <JsIcon className="w-3.5 h-3.5 shrink-0" />;
+    if (text.includes('php') || text.includes('pdo') || text.includes('$_post') || text.includes('$_get') || text.includes('session')) return <PhpIcon className="w-3.5 h-3.5 shrink-0" />;
+  }
+  return getSubjectIcon(q.subject, 'w-3.5 h-3.5 shrink-0');
 }
 
 export function QuizPage() {
@@ -369,7 +374,7 @@ export function QuizPage() {
             <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-gray-100">
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-blue-700 font-bold text-xs rounded-lg uppercase tracking-wider">
-                  {getSubjectIcon(question.subject, 'w-3.5 h-3.5 shrink-0')}
+                  {getQuestionTechIcon(question)}
                   {question.subject}
                 </span>
                 {question.difficulty && (
