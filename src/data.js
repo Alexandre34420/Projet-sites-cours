@@ -199,7 +199,7 @@ export const pythonDevData = [
 export const qcmPythonDevData = [
   {
     id: 501,
-    subject: "Python Dev",
+    subject: "Python",
     question: "Dans un projet géré avec Poetry, quel fichier remplace le traditionnel 'requirements.txt' pour stocker les métadonnées et déclarer les dépendances ?",
     options: ["package.json", "poetry.lock", "pyproject.toml", "setup.py"],
     answer: "pyproject.toml",
@@ -207,7 +207,7 @@ export const qcmPythonDevData = [
   },
   {
     id: 502,
-    subject: "Python Dev",
+    subject: "Python",
     question: "En Pytest, quel est le but du pattern AAA ?",
     options: [
       "Authentification, Autorisation, Accounting",
@@ -220,7 +220,7 @@ export const qcmPythonDevData = [
   },
   {
     id: 503,
-    subject: "Python Dev",
+    subject: "Python",
     question: "Quelle méthode du module 'requests' permet de déclencher une exception si le serveur renvoie un code d'erreur HTTP (ex: 404 ou 500) ?",
     options: ["response.catch_error()", "response.ok()", "response.raise_for_status()", "response.check()"],
     answer: "response.raise_for_status()",
@@ -228,7 +228,7 @@ export const qcmPythonDevData = [
   },
   {
     id: 504,
-    subject: "Python Dev",
+    subject: "Python",
     question: "Qu'est-ce qu'un ORM (Object-Relational Mapping) en Python ?",
     options: [
       "Un outil de formatage du code",
@@ -241,7 +241,7 @@ export const qcmPythonDevData = [
   },
   {
     id: 505,
-    subject: "Python Dev",
+    subject: "Python",
     question: "Quel outil vérifie le respect des conventions de style (PEP 8) comme l'indentation et les espaces dans Flake8 ?",
     options: ["pyflakes", "mccabe", "pycodestyle", "pytest"],
     answer: "pycodestyle",

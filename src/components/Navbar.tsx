@@ -9,8 +9,7 @@ import {
   Menu, 
   X, 
   Sparkles, 
-  ShieldCheck,
-  Terminal
+  ShieldCheck 
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { 
@@ -34,7 +33,6 @@ export function Navbar() {
 
   const links = [
     { to: '/python', label: 'Python', icon: <PythonIcon className="w-4 h-4 shrink-0" /> },
-    { to: '/python-dev', label: 'Python Dev', icon: <Terminal className="w-4 h-4 shrink-0" /> },
     { to: '/architecture', label: 'Architecture', icon: <ArchitectureIcon className="w-4 h-4 shrink-0" /> },
     { to: '/java', label: 'Java', icon: <JavaIcon className="w-4 h-4 shrink-0" /> },
     { to: '/c', label: 'Langage C', icon: <CIcon className="w-4 h-4 shrink-0" /> },

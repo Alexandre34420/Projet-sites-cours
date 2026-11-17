@@ -3,8 +3,7 @@ import {
   ArrowRight, 
   UserPlus, 
   Sparkles, 
-  Trophy,
-  Terminal
+  Trophy
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { 
@@ -27,17 +26,10 @@ export function Home() {
   const categories = [
     {
       title: 'Python',
-      description: 'Apprenez les bases, les structures de données, la POO et les librairies de Data Science.',
+      description: 'Bases, structures de données, POO, environnements virtuels (venv, poetry), tests Pytest, requêtes HTTP, BDD et qualité de code.',
       icon: <PythonIcon className="w-9 h-9" />,
       to: '/python',
       color: 'bg-blue-50 border-blue-100 hover:border-blue-300'
-    },
-    {
-      title: 'Python Développement',
-      description: 'Environnements (Venv, Pyenv, Poetry), Tests unitaires (Pytest), API & HTTP (Requests), BDD et Linters (Flake8).',
-      icon: <Terminal className="w-9 h-9 text-blue-600" />,
-      to: '/python-dev',
-      color: 'bg-sky-50 border-sky-100 hover:border-sky-300'
     },
     {
       title: 'Architecture & Conception',

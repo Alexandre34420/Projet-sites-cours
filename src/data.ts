@@ -31,17 +31,6 @@ export interface QcmItem {
   explanation: string;
 }
 
-export const pythonData: CourseItem[] = [
-  { id: "p1", category: "Bases", title: "Entrées / Sorties & Types", content: "Conversion: int(), float(), str(), bool()", code: "print(a, b, sep=\" \", end=\"\\n\")\ns = input(\"Saisie : \")" },
-  { id: "p2", category: "Bases", title: "Boucles & Conditions", content: "Les structures de contrôle de flux.", code: "if a > b:\n    print(a)\nelif a == b:\n    pass\nelse:\n    print(b)\n\nfor i in range(0, 10, 2):\n    print(i)" },
-  { id: "p3", category: "Structures", title: "Listes & Tuples", content: "Les listes sont mutables, les tuples sont immuables.", code: "t = (1, 2) # Tuple\nL = [1, 2, 3] # Liste\nL.append(4)\nL.remove(2)\nL[1:3] # Slicing" },
-  { id: "p4", category: "Structures", title: "Dictionnaires", content: "Paires clé:valeur.", code: "d = {'a': 1, 'b': 2}\nfor k, v in d.items():\n    print(k, v)" },
-  { id: "p5", category: "Avancé", title: "Fonctions & Map/Filter", content: "Programmation fonctionnelle et Type hints.", code: "def f(x: int) -> int:\n    return x + 1\n\nlist(map(lambda x: x*x, L))\nlist(filter(lambda x: x>=18, L))" },
-  { id: "p6", category: "Fichiers", title: "OS & Fichiers", content: "Manipulation du système de fichiers.", code: "import os, shutil\nwith open(\"file.txt\", \"w\") as f:\n    f.write(\"Texte\")" },
-  { id: "p7", category: "Data Science", title: "Numpy & Pandas", content: "Traitement de données.", code: "import numpy as np\nimport pandas as pd\n\nt = np.zeros(5)\ndf = pd.DataFrame({'X': [1,2]})\ndf.loc[df['X'] >= 2]" },
-  { id: "p8", category: "POO", title: "Classes & Exceptions", content: "Création d'objets et gestion des erreurs.", code: "try:\n    raise ValueError(\"Erreur\")\nexcept ValueError:\n    pass\n\nclass Personne:\n    def __init__(self, nom):\n        self.nom = nom" }
-];
-
 export const pythonDevData: CourseItem[] = [
   {
     id: "pd1",
@@ -99,6 +88,18 @@ export const pythonDevData: CourseItem[] = [
     content: "Flake8 regroupe 3 outils : pycodestyle (vérifie le style et PEP8 : indentation, espaces), pyflakes (détecte les erreurs logiques : imports inutilisés, variables non définies) et mccabe (mesure la complexité cyclomatique).",
     code: "# Lancer flake8 sur un fichier avec une complexité max tolérée de 10\nflake8 --max-complexity=10 main.py\n\n# Exemples d'erreurs détectées :\n# E111 : indentation is not a multiple of 4 (pycodestyle)\n# F401 : 'os' imported but unused (pyflakes)\n# C901 : 'calculer' is too complex (mccabe)"
   }
+];
+
+export const pythonData: CourseItem[] = [
+  { id: "p1", category: "Bases", title: "Entrées / Sorties & Types", content: "Conversion: int(), float(), str(), bool()", code: "print(a, b, sep=\" \", end=\"\\n\")\ns = input(\"Saisie : \")" },
+  { id: "p2", category: "Bases", title: "Boucles & Conditions", content: "Les structures de contrôle de flux.", code: "if a > b:\n    print(a)\nelif a == b:\n    pass\nelse:\n    print(b)\n\nfor i in range(0, 10, 2):\n    print(i)" },
+  { id: "p3", category: "Structures", title: "Listes & Tuples", content: "Les listes sont mutables, les tuples sont immuables.", code: "t = (1, 2) # Tuple\nL = [1, 2, 3] # Liste\nL.append(4)\nL.remove(2)\nL[1:3] # Slicing" },
+  { id: "p4", category: "Structures", title: "Dictionnaires", content: "Paires clé:valeur.", code: "d = {'a': 1, 'b': 2}\nfor k, v in d.items():\n    print(k, v)" },
+  { id: "p5", category: "Avancé", title: "Fonctions & Map/Filter", content: "Programmation fonctionnelle et Type hints.", code: "def f(x: int) -> int:\n    return x + 1\n\nlist(map(lambda x: x*x, L))\nlist(filter(lambda x: x>=18, L))" },
+  { id: "p6", category: "Fichiers", title: "OS & Fichiers", content: "Manipulation du système de fichiers.", code: "import os, shutil\nwith open(\"file.txt\", \"w\") as f:\n    f.write(\"Texte\")" },
+  { id: "p7", category: "Data Science", title: "Numpy & Pandas", content: "Traitement de données.", code: "import numpy as np\nimport pandas as pd\n\nt = np.zeros(5)\ndf = pd.DataFrame({'X': [1,2]})\ndf.loc[df['X'] >= 2]" },
+  { id: "p8", category: "POO", title: "Classes & Exceptions", content: "Création d'objets et gestion des erreurs.", code: "try:\n    raise ValueError(\"Erreur\")\nexcept ValueError:\n    pass\n\nclass Personne:\n    def __init__(self, nom):\n        self.nom = nom" },
+  ...pythonDevData
 ];
 
 export const architectureData: CourseItem[] = [
@@ -532,7 +533,8 @@ export const qcmJavaAdvancedData: QcmItem[] = [
 export const qcmPythonDevData: QcmItem[] = [
   {
     id: 501,
-    subject: "Python Dev",
+    subject: "Python",
+    difficulty: "intermediaire",
     question: "Dans un projet géré avec Poetry, quel fichier remplace le traditionnel 'requirements.txt' pour stocker les métadonnées et déclarer les dépendances ?",
     options: ["package.json", "poetry.lock", "pyproject.toml", "setup.py"],
     answer: "pyproject.toml",
@@ -540,7 +542,8 @@ export const qcmPythonDevData: QcmItem[] = [
   },
   {
     id: 502,
-    subject: "Python Dev",
+    subject: "Python",
+    difficulty: "intermediaire",
     question: "En Pytest, quel est le but du pattern AAA ?",
     options: [
       "Authentification, Autorisation, Accounting",
@@ -553,7 +556,8 @@ export const qcmPythonDevData: QcmItem[] = [
   },
   {
     id: 503,
-    subject: "Python Dev",
+    subject: "Python",
+    difficulty: "intermediaire",
     question: "Quelle méthode du module 'requests' permet de déclencher une exception si le serveur renvoie un code d'erreur HTTP (ex: 404 ou 500) ?",
     options: ["response.catch_error()", "response.ok()", "response.raise_for_status()", "response.check()"],
     answer: "response.raise_for_status()",
@@ -561,7 +565,8 @@ export const qcmPythonDevData: QcmItem[] = [
   },
   {
     id: 504,
-    subject: "Python Dev",
+    subject: "Python",
+    difficulty: "intermediaire",
     question: "Qu'est-ce qu'un ORM (Object-Relational Mapping) en Python ?",
     options: [
       "Un outil de formatage du code",
@@ -574,7 +579,8 @@ export const qcmPythonDevData: QcmItem[] = [
   },
   {
     id: 505,
-    subject: "Python Dev",
+    subject: "Python",
+    difficulty: "intermediaire",
     question: "Quel outil vérifie le respect des conventions de style (PEP 8) comme l'indentation et les espaces dans Flake8 ?",
     options: ["pyflakes", "mccabe", "pycodestyle", "pytest"],
     answer: "pycodestyle",
