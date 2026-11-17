@@ -457,7 +457,20 @@ export function getCategoryIcon(category: string, className = 'w-4 h-4'): React.
   if (c.includes('javascript') || c === 'js') return <JsIcon className={className} />;
   if (c.includes('php')) return <PhpIcon className={className} />;
   if (c.includes('python')) return <PythonIcon className={className} />;
-  if (c.includes('java') && !c.includes('script')) return <JavaIcon className={className} />;
+  if (
+    (c.includes('java') && !c.includes('script')) ||
+    c.includes('héritage') ||
+    c.includes('heritage') ||
+    c.includes('polymorphisme') ||
+    c.includes('abstraite') ||
+    c.includes('interface') ||
+    c.includes('poo') ||
+    c.includes('constructeur') ||
+    c.includes('encapsulation') ||
+    c.includes('méthodes usuelles')
+  ) {
+    return <JavaIcon className={className} />;
+  }
   if (c === 'c' || c.includes('langage c') || c.includes('système') || c.includes('pointeur')) return <CIcon className={className} />;
   if (c.includes('sql') || c.includes('merise') || c.includes('mcd') || c.includes('mld') || c.includes('bdd') || c.includes('données') || c.includes('normalisation')) {
     return <SqlIcon className={className} />;

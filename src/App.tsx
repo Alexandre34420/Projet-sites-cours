@@ -48,7 +48,7 @@ function App() {
                 element={
                   <CourseView
                     title="Java & POO"
-                    description="Classes, Objets, Encapsulation et méthodes usuelles."
+                    description="Classes, Objets, Encapsulation, Héritage, Polymorphisme et Interfaces."
                     data={javaData}
                     language="java"
                   />

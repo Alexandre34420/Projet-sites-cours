@@ -40,7 +40,7 @@ export function Home() {
     },
     {
       title: 'Java',
-      description: 'Découvrez la POO, l\'encapsulation et les concepts avancés du langage Java.',
+      description: 'POO, Encapsulation, Héritage, Polymorphisme, Classes Abstraites et Interfaces.',
       icon: <JavaIcon className="w-9 h-9" />,
       to: '/java',
       color: 'bg-amber-50 border-amber-100 hover:border-amber-300'

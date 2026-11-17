@@ -26,6 +26,19 @@ const getCodeLanguage = (category: string, defaultLanguage = 'python'): string =
   if (cat.includes('javascript') || cat.includes('js')) return 'javascript';
   if (cat.includes('php')) return 'php';
   if (cat.includes('sql') || cat.includes('mcd') || cat.includes('mld') || cat.includes('merise') || cat.includes('normalisation')) return 'sql';
+  if (
+    cat.includes('java') ||
+    cat.includes('héritage') ||
+    cat.includes('heritage') ||
+    cat.includes('polymorphisme') ||
+    cat.includes('abstraite') ||
+    cat.includes('interface') ||
+    cat.includes('poo') ||
+    cat.includes('constructeur') ||
+    cat.includes('encapsulation')
+  ) {
+    return 'java';
+  }
   return defaultLanguage;
 };
 
@@ -54,7 +67,20 @@ export function CourseView({ title, description, data, language = 'python' }: Co
 
   const handleCopy = async (id: string, code: string) => {
     try {
-      await navigator.clipboard.writeText(code);
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(code);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = code;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
       setCopiedId(id);
       setTimeout(() => setCopiedId(null), 2000);
     } catch (e) {
