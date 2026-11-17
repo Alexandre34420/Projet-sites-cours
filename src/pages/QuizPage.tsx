@@ -2,22 +2,22 @@ import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { qcmData, QcmItem } from '../data';
 import { useAuth } from '../context/AuthContext';
-import { 
-  CheckCircle2, 
-  XCircle, 
-  ArrowRight, 
-  RotateCcw, 
-  BrainCircuit, 
+import {
+  CheckCircle2,
+  XCircle,
+  ArrowRight,
+  RotateCcw,
+  BrainCircuit,
   Trophy,
   Sparkles
 } from 'lucide-react';
-import { 
-  PythonIcon, 
-  JavaIcon, 
-  CIcon, 
-  WebIcon, 
-  SqlIcon, 
-  ArchitectureIcon, 
+import {
+  PythonIcon,
+  JavaIcon,
+  CIcon,
+  WebIcon,
+  SqlIcon,
+  ArchitectureIcon,
   QuizIcon,
   HtmlIcon,
   CssIcon,
@@ -190,18 +190,16 @@ export function QuizPage() {
               <button
                 key={item.id}
                 onClick={() => handleSubjectChange(item.id)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-bold transition-all shadow-xs border ${
-                  isSelected
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-bold transition-all shadow-xs border ${isSelected
                     ? 'bg-gray-900 text-white border-gray-900 ring-2 ring-gray-900/10 shadow-md'
                     : 'bg-white text-gray-700 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                }`}
+                  }`}
               >
                 <Icon className="w-4 h-4 shrink-0" />
                 <span>{item.label}</span>
                 <span
-                  className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
-                    isSelected ? 'bg-gray-800 text-gray-200' : 'bg-gray-100 text-gray-600'
-                  }`}
+                  className={`text-xs px-2 py-0.5 rounded-full font-semibold ${isSelected ? 'bg-gray-800 text-gray-200' : 'bg-gray-100 text-gray-600'
+                    }`}
                 >
                   {count}
                 </span>
@@ -222,11 +220,10 @@ export function QuizPage() {
           <button
             key={id}
             onClick={() => handleDifficultyChange(id)}
-            className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all ${
-              selectedDifficulty === id
+            className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all ${selectedDifficulty === id
                 ? 'bg-blue-600 text-white shadow-xs'
                 : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-            }`}
+              }`}
           >
             {label}
           </button>
@@ -254,10 +251,10 @@ export function QuizPage() {
               {score === activeQuestions.length
                 ? "Félicitations ! Un score parfait !"
                 : score >= activeQuestions.length * 0.75
-                ? "Excellent travail ! Notions très bien assimilées."
-                : score >= activeQuestions.length * 0.5
-                ? "Bonne base ! Quelques concepts à consolider."
-                : "Entraînez-vous encore, la pratique fait la maîtrise !"}
+                  ? "Excellent travail ! Notions très bien assimilées."
+                  : score >= activeQuestions.length * 0.5
+                    ? "Bonne base ! Quelques concepts à consolider."
+                    : "Entraînez-vous encore, la pratique fait la maîtrise !"}
             </p>
           </div>
 
