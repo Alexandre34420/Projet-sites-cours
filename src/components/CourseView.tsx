@@ -33,12 +33,15 @@ const getCodeLanguage = (category: string, defaultLanguage = 'python'): string =
     cat.includes('polymorphisme') ||
     cat.includes('abstraite') ||
     cat.includes('interface') ||
-    cat.includes('poo') ||
     cat.includes('constructeur') ||
-    cat.includes('encapsulation')
+    cat.includes('encapsulation') ||
+    cat.includes('méthodes usuelles') ||
+    cat === 'bases poo'
   ) {
     return 'java';
   }
+  if (cat.includes('toml')) return 'toml';
+  if (cat.includes('api & http') || cat.includes('http') || cat.includes('json')) return 'javascript';
   return defaultLanguage;
 };
 

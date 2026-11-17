@@ -8,7 +8,7 @@ import { AuthPage } from './pages/AuthPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { AdminPage } from './pages/AdminPage';
 import { ShieldCheck } from 'lucide-react';
-import { pythonData, architectureData, javaData, cData, webData, bddData } from './data';
+import { pythonData, pythonDevData, architectureData, javaData, cData, webData, bddData } from './data';
 
 function App() {
   return (
@@ -27,6 +27,18 @@ function App() {
                     title="Python Cheat Sheet"
                     description="Bases, Structures, POO, et Data Science avec Python."
                     data={pythonData}
+                    language="python"
+                  />
+                }
+              />
+
+              <Route
+                path="/python-dev"
+                element={
+                  <CourseView
+                    title="Python Développement"
+                    description="Environnements, Tests (Pytest), API & HTTP, Bases de données et Qualité du code."
+                    data={pythonDevData}
                     language="python"
                   />
                 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Terminal } from 'lucide-react';
 
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
@@ -456,7 +457,17 @@ export function getCategoryIcon(category: string, className = 'w-4 h-4'): React.
   if (c.includes('css')) return <CssIcon className={className} />;
   if (c.includes('javascript') || c === 'js') return <JsIcon className={className} />;
   if (c.includes('php')) return <PhpIcon className={className} />;
-  if (c.includes('python')) return <PythonIcon className={className} />;
+  if (
+    c.includes('python') ||
+    c.includes('environnement') ||
+    c.includes('pytest') ||
+    c.includes('test') ||
+    c.includes('flake8') ||
+    c.includes('poetry') ||
+    c.includes('qualité')
+  ) {
+    return <PythonIcon className={className} />;
+  }
   if (
     (c.includes('java') && !c.includes('script')) ||
     c.includes('héritage') ||
@@ -464,17 +475,18 @@ export function getCategoryIcon(category: string, className = 'w-4 h-4'): React.
     c.includes('polymorphisme') ||
     c.includes('abstraite') ||
     c.includes('interface') ||
-    c.includes('poo') ||
     c.includes('constructeur') ||
     c.includes('encapsulation') ||
-    c.includes('méthodes usuelles')
+    c.includes('méthodes usuelles') ||
+    c === 'bases poo'
   ) {
     return <JavaIcon className={className} />;
   }
   if (c === 'c' || c.includes('langage c') || c.includes('système') || c.includes('pointeur')) return <CIcon className={className} />;
-  if (c.includes('sql') || c.includes('merise') || c.includes('mcd') || c.includes('mld') || c.includes('bdd') || c.includes('données') || c.includes('normalisation')) {
+  if (c.includes('sql') || c.includes('merise') || c.includes('mcd') || c.includes('mld') || c.includes('bdd') || c.includes('données') || c.includes('base') || c.includes('normalisation')) {
     return <SqlIcon className={className} />;
   }
+  if (c.includes('api') || c.includes('http')) return <WebIcon className={className} />;
   if (c.includes('uml') || c.includes('architecture')) return <ArchitectureIcon className={className} />;
   return null;
 }
@@ -484,6 +496,7 @@ export function getCategoryIcon(category: string, className = 'w-4 h-4'): React.
  */
 export function getSubjectIcon(subject: string, className = 'w-4 h-4'): React.ReactNode {
   const s = (subject || '').toLowerCase().trim();
+  if (s === 'python dev' || s.includes('python dev') || s.includes('python développement')) return <Terminal className={className} />;
   if (s.includes('python')) return <PythonIcon className={className} />;
   if (s.includes('java') && !s.includes('script')) return <JavaIcon className={className} />;
   if (s === 'langage c' || s === 'c') return <CIcon className={className} />;

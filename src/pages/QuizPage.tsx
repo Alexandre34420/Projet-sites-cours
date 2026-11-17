@@ -9,7 +9,8 @@ import {
   RotateCcw, 
   BrainCircuit, 
   Trophy,
-  Sparkles
+  Sparkles,
+  Terminal
 } from 'lucide-react';
 import { 
   PythonIcon, 
@@ -26,7 +27,7 @@ import {
   getSubjectIcon
 } from '../components/TechIcons';
 
-type SubjectFilter = 'Tous' | 'Architecture' | 'Python' | 'Java' | 'Langage C' | 'Développement Web' | 'Bases de Données & SQL';
+type SubjectFilter = 'Tous' | 'Architecture' | 'Python' | 'Python Dev' | 'Java' | 'Langage C' | 'Développement Web' | 'Bases de Données & SQL';
 type DifficultyFilter = 'tous' | 'debutant' | 'intermediaire' | 'expert';
 
 interface SubjectConfig {
@@ -37,8 +38,9 @@ interface SubjectConfig {
 
 const SUBJECT_ITEMS: SubjectConfig[] = [
   { id: 'Tous', label: 'Tous', icon: QuizIcon },
-  { id: 'Architecture', label: 'Architecture', icon: ArchitectureIcon },
   { id: 'Python', label: 'Python', icon: PythonIcon },
+  { id: 'Python Dev', label: 'Python Dev', icon: Terminal },
+  { id: 'Architecture', label: 'Architecture', icon: ArchitectureIcon },
   { id: 'Java', label: 'Java', icon: JavaIcon },
   { id: 'Langage C', label: 'Langage C', icon: CIcon },
   { id: 'Développement Web', label: 'Développement Web', icon: WebIcon },
@@ -46,6 +48,9 @@ const SUBJECT_ITEMS: SubjectConfig[] = [
 ];
 
 function getQuestionTechIcon(q: QcmItem) {
+  if (q.subject === 'Python Dev' || q.subject.toLowerCase() === 'python dev') {
+    return <Terminal className="w-3.5 h-3.5 shrink-0 text-blue-600" />;
+  }
   if (q.subject === 'Développement Web') {
     const text = (q.question + ' ' + (q.explanation || '')).toLowerCase();
     if (text.includes('html') || text.includes('balise') || text.includes('doctype') || text.includes('dom')) return <HtmlIcon className="w-3.5 h-3.5 shrink-0" />;
@@ -74,6 +79,7 @@ export function QuizPage() {
       'Tous': qcmData.length,
       'Architecture': 0,
       'Python': 0,
+      'Python Dev': 0,
       'Java': 0,
       'Langage C': 0,
       'Développement Web': 0,
@@ -82,8 +88,9 @@ export function QuizPage() {
     qcmData.forEach((q) => {
       const s = q.subject;
       if (s === 'Architecture') counts['Architecture']++;
-      else if (s === 'Python') counts['Python']++;
-      else if (s === 'Java') counts['Java']++;
+      else if (s === 'Python Dev' || s.toLowerCase() === 'python dev') counts['Python Dev']++;
+      else if (s === 'Python' || s.toLowerCase() === 'python') counts['Python']++;
+      else if (s === 'Java' || s.toLowerCase() === 'java') counts['Java']++;
       else if (s === 'Langage C' || s.toLowerCase() === 'c') counts['Langage C']++;
       else if (s === 'Développement Web' || s.toLowerCase().includes('web')) counts['Développement Web']++;
       else if (s === 'Bases de Données & SQL' || s.toLowerCase().includes('sql') || s.toLowerCase().includes('données') || s.toLowerCase().includes('bdd')) counts['Bases de Données & SQL']++;

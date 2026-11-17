@@ -42,6 +42,65 @@ export const pythonData: CourseItem[] = [
   { id: "p8", category: "POO", title: "Classes & Exceptions", content: "Création d'objets et gestion des erreurs.", code: "try:\n    raise ValueError(\"Erreur\")\nexcept ValueError:\n    pass\n\nclass Personne:\n    def __init__(self, nom):\n        self.nom = nom" }
 ];
 
+export const pythonDevData: CourseItem[] = [
+  {
+    id: "pd1",
+    category: "Environnement",
+    title: "Structure, Venv & Pyenv",
+    content: "Un projet Python standard contient : src/, tests/, .venv, .git, README.md et requirements.txt. L'environnement virtuel (.venv) isole les dépendances. Pyenv permet de gérer plusieurs versions de Python sur la même machine.",
+    code: "# Création et activation d'un environnement virtuel (venv)\npython -m venv .venv\n\n# Activation (Windows)\n.venv\\Scripts\\activate\n\n# Activation (Mac/Linux)\nsource .venv/bin/activate\n\n# Désactivation\ndeactivate"
+  },
+  {
+    id: "pd2",
+    category: "Environnement",
+    title: "Gestion des paquets (Pip & Poetry)",
+    content: "Pip installe les paquets (pip install, pip freeze > requirements.txt). Poetry est un gestionnaire avancé (remplace requirements.txt) qui gère les dépendances via pyproject.toml et garantit des installations reproductibles avec poetry.lock.",
+    code: "# PIP\npython -m pip install requests==2.31.0\npython -m pip install -r requirements.txt\n\n# POETRY\npoetry new mon_projet      # Créer un projet\npoetry add pendulum        # Ajouter une dépendance\npoetry remove pendulum     # Supprimer\npoetry show --tree         # Voir l'arbre des dépendances\npoetry run python main.py  # Exécuter dans l'env Poetry\npoetry build               # Créer un package distribuable (.tar.gz et .whl)"
+  },
+  {
+    id: "pd3",
+    category: "Tests (Pytest)",
+    title: "Architecture AAA & assert",
+    content: "Pytest est un framework de test unitaire. Les tests doivent suivre le pattern AAA : Arrange (préparer le contexte), Act (appeler la fonction), Assert (vérifier le résultat).",
+    code: "def test_addition():\n    # Arrange\n    a, b = 2, 3\n    # Act\n    resultat = addition(a, b)\n    # Assert\n    assert resultat == 5\n\n# Tester une exception attendue\nimport pytest\ndef test_tva_negative():\n    with pytest.raises(ValueError, match=\"prix négatif\"):\n        calcul_tva(-10)"
+  },
+  {
+    id: "pd4",
+    category: "Tests (Pytest)",
+    title: "Fixtures, Parametrize & Mocks",
+    content: "@pytest.fixture prépare un contexte réutilisable (souvent dans conftest.py). parametrize teste plusieurs scénarios d'un coup. monkeypatch modifie temporairement l'environnement (setattr, setenv). Mock simule un objet réel.",
+    code: "# Parametrize (tester plusieurs valeurs)\n@pytest.mark.parametrize(\"a, b, attendu\", [(2,3,5), (10,5,15)])\ndef test_add(a, b, attendu):\n    assert addition(a,b) == attendu\n\n# Monkeypatch : modifier le comportement\ndef test_api(monkeypatch):\n    monkeypatch.setattr(\"module.appeler_api\", lambda: 25)\n    assert obtenir_temperature() == 25\n\n# Mock\nfrom unittest.mock import Mock\napi = Mock()\napi.get_temperature.return_value = 25"
+  },
+  {
+    id: "pd5",
+    category: "API & HTTP",
+    title: "Composants Requête/Réponse & Codes HTTP",
+    content: "Requête : Méthode (GET, POST, PUT, DELETE), URL, Paramètres, Headers, Body. Réponse : Status Line, Headers, Body. Codes HTTP : 2xx (Succès), 3xx (Redirection), 4xx (Erreur client, ex: 404 Not Found), 5xx (Erreur serveur).",
+    code: "// Structure Body (JSON)\n{\n    \"name\": \"Tassili\",\n    \"age\": 22\n}\n\n// Headers importants :\n// Content-Type: application/json (Format envoyé)\n// Accept: application/json (Format souhaité)\n// Authorization: Bearer XXX (Authentification)"
+  },
+  {
+    id: "pd6",
+    category: "API & HTTP",
+    title: "Module Requests",
+    content: "La bibliothèque 'requests' permet de communiquer avec des API. Toujours vérifier la réponse avec raise_for_status() et gérer les exceptions (HTTPError, Timeout, ConnectionError) dans un bloc try/except.",
+    code: "import requests\n\nurl = \"https://api.exemple.com/posts\"\nheaders = {\"Content-Type\": \"application/json\"}\ndata = {\"title\": \"Mon post\"}\n\ntry:\n    # Requête POST avec timeout\n    response = requests.post(url, headers=headers, json=data, timeout=10)\n    response.raise_for_status() # Déclenche HTTPError si code >= 400\n    \n    # Lecture JSON\n    print(response.json()['title'])\nexcept requests.exceptions.HTTPError:\n    print(\"Erreur HTTP\")\nexcept requests.exceptions.Timeout:\n    print(\"Délai dépassé\")"
+  },
+  {
+    id: "pd7",
+    category: "Bases de données",
+    title: "Driver vs ORM",
+    content: "Driver (ex: mysql-connector-python) : contrôle direct du SQL, simple mais nécessite d'écrire des requêtes textuelles. ORM (ex: SQLAlchemy, Django ORM, Peewee) : mappe les classes Python sur les tables SQL (Object-Relational Mapping), cache la complexité SQL.",
+    code: "import mysql.connector\n\n# Approche Driver\nconn = mysql.connector.connect(host=\"localhost\", user=\"root\", database=\"ecole\")\ncur = conn.cursor()\ncur.execute(\"SELECT * FROM etudiant\")\nresultats = cur.fetchall()\n\nfor etudiant in resultats:\n    print(etudiant)\nconn.close()\n\n# Approche ORM (Pseudo-code)\n# etudiant = Etudiant(nom=\"Tassili\")\n# session.add(etudiant)\n# session.commit()"
+  },
+  {
+    id: "pd8",
+    category: "Qualité du code",
+    title: "Analyseurs & Linters (Flake8)",
+    content: "Flake8 regroupe 3 outils : pycodestyle (vérifie le style et PEP8 : indentation, espaces), pyflakes (détecte les erreurs logiques : imports inutilisés, variables non définies) et mccabe (mesure la complexité cyclomatique).",
+    code: "# Lancer flake8 sur un fichier avec une complexité max tolérée de 10\nflake8 --max-complexity=10 main.py\n\n# Exemples d'erreurs détectées :\n# E111 : indentation is not a multiple of 4 (pycodestyle)\n# F401 : 'os' imported but unused (pyflakes)\n# C901 : 'calculer' is too complex (mccabe)"
+  }
+];
+
 export const architectureData: CourseItem[] = [
   { id: "a1", category: "Fondamentaux", title: "Complexité & Modélisation", content: "La modélisation permet de prendre du recul avant de coder. Elle réduit la complexité fonctionnelle, technique (dépendances) et organisationnelle. Un modèle est une représentation simplifiée (abstraction) répondant à un point de vue et un périmètre.", code: "" },
   { id: "a2", category: "Statique", title: "Diagramme de Cas d'Usage", content: "Répond à : 'Qui utilise le système et pour faire quoi ?'. Inclut les Acteurs (externes au système) et les Cas d'usage (verbes à l'infinitif).", code: "Relations :\n- Association : L'acteur participe.\n- <<include>> : Comportement obligatoire (ex: Se connecter).\n- <<extend>> : Comportement optionnel (ex: Mdp oublié)." },
@@ -470,8 +529,62 @@ export const qcmJavaAdvancedData: QcmItem[] = [
   }
 ];
 
+export const qcmPythonDevData: QcmItem[] = [
+  {
+    id: 501,
+    subject: "Python Dev",
+    question: "Dans un projet géré avec Poetry, quel fichier remplace le traditionnel 'requirements.txt' pour stocker les métadonnées et déclarer les dépendances ?",
+    options: ["package.json", "poetry.lock", "pyproject.toml", "setup.py"],
+    answer: "pyproject.toml",
+    explanation: "pyproject.toml est le standard moderne pour la configuration des projets Python. poetry.lock, quant à lui, garantit les versions exactes installées."
+  },
+  {
+    id: 502,
+    subject: "Python Dev",
+    question: "En Pytest, quel est le but du pattern AAA ?",
+    options: [
+      "Authentification, Autorisation, Accounting",
+      "Arrange (Préparer), Act (Agir), Assert (Vérifier)",
+      "API, Application, Automation",
+      "All, Any, Assert"
+    ],
+    answer: "Arrange (Préparer), Act (Agir), Assert (Vérifier)",
+    explanation: "Le pattern AAA structure un test unitaire en trois étapes : préparer les données, exécuter la fonction, puis vérifier que le résultat correspond aux attentes."
+  },
+  {
+    id: 503,
+    subject: "Python Dev",
+    question: "Quelle méthode du module 'requests' permet de déclencher une exception si le serveur renvoie un code d'erreur HTTP (ex: 404 ou 500) ?",
+    options: ["response.catch_error()", "response.ok()", "response.raise_for_status()", "response.check()"],
+    answer: "response.raise_for_status()",
+    explanation: "raise_for_status() vérifie le code HTTP et déclenche une requests.exceptions.HTTPError si le code est supérieur ou égal à 400."
+  },
+  {
+    id: 504,
+    subject: "Python Dev",
+    question: "Qu'est-ce qu'un ORM (Object-Relational Mapping) en Python ?",
+    options: [
+      "Un outil de formatage du code",
+      "Un gestionnaire de versions de Python",
+      "Une bibliothèque qui mappe les classes et objets Python sur les tables et lignes d'une base de données relationnelle",
+      "Un module pour créer des API REST"
+    ],
+    answer: "Une bibliothèque qui mappe les classes et objets Python sur les tables et lignes d'une base de données relationnelle",
+    explanation: "Un ORM (comme SQLAlchemy ou Django ORM) ajoute une couche d'abstraction évitant d'écrire directement des requêtes SQL."
+  },
+  {
+    id: 505,
+    subject: "Python Dev",
+    question: "Quel outil vérifie le respect des conventions de style (PEP 8) comme l'indentation et les espaces dans Flake8 ?",
+    options: ["pyflakes", "mccabe", "pycodestyle", "pytest"],
+    answer: "pycodestyle",
+    explanation: "Flake8 combine trois outils : pycodestyle pour le style (PEP 8), pyflakes pour les erreurs logiques, et mccabe pour la complexité cyclomatique."
+  }
+];
+
 export const qcmData: QcmItem[] = [
   ...pythonQcmData.map(q => ({ ...q, subject: "Python" })),
+  ...qcmPythonDevData,
   ...architectureQcmData.map(q => ({ ...q, subject: "Architecture" })),
   ...javaQcmData.map(q => ({ ...q, subject: "Java" })),
   ...qcmJavaAdvancedData,
